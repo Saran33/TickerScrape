@@ -1,0 +1,11 @@
+Command+Option+J
+
+Command+Shift+P (Mac) to open the Command Menu. Start typing javascript , select Disable JavaScript, and then press Enter
+
+Network tab > XHR
+
+Go back to site home
+Click the clear icon, Preserve Log.
+Click  search button on site
+Check post headers
+Click preview tab

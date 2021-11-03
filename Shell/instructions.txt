@@ -1,0 +1,57 @@
+scrapy genspider listings
+scrapy genspider listings www.centris.ca/en
+
+Copy post query request payload to:
+https://jsonformatter.curiousconcept.com/
+
+
+docker run -it --restart always -p 8050:8050 scrapinghub/splash
+docker run -it -p 8050:8050 scrapinghub/splash
+
+function main(splash, args)
+  splash.images_enabled = false
+  splash.js_enabled = false
+  assert(splash:go(args.url))
+  assert(splash:wait(0.5))
+  return {
+    png = splash:png(),
+    har = splash:har(),
+    splash:html()
+    }
+end
+
+function main(splash, args)
+  splash:on_request(function(request)
+    if request.url:find('css') then
+        request.abort()
+    end
+  end)
+  splash.images_enabled = false
+  splash.js_enabled = false
+  assert(splash:go(args.url))
+  assert(splash:wait(0.5))
+  return splash:html()
+end
+
+https://github.com/TeamHG-Memex/aquarium
+cd /Users/zenman618/
+cookiecutter gh:Saran33/aquarium
+
+cd /Users/zenman618/aquarium
+docker-compose up
+
+cd /Users/zenman618/aquarium
+docker-compose stop
+
+http://localhost:8050/
+http://localhost:8036/
+
+
+## For Scrapyrt::
+scrapyrt -p 5000
+#OR:
+scrapyrt
+127.0.0.1:9080/crawl.json?start_requests=true&spider_name=ft
+
+
+git push -f https://github.com/PWE-Capital/FiScrape
