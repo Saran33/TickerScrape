@@ -1,5 +1,4 @@
 # TickerScrape
-![alt text](https://github.com/Saran33/TickerScrape/blob/main/images/PWE_TickerScrape_splash.png?raw=true)
 ### Scrape the universe of exchange-traded security tickers. 
 `TickerScrape` is a package for scraping financial security ticker data. It leverages `scrapy`.
 
