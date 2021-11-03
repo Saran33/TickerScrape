@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy import asc, desc, func
 from scrapy.exceptions import DropItem
-from FiScrape.models import Article, Tag, db_connect, create_table, Topic, Source, Author, SnipBlob, Blob, SnipVader, Vader #  create_output_table
+from TickerScrape.models import Article, Tag, db_connect, create_table, Topic, Source, Author, SnipBlob, Blob, SnipVader, Vader #  create_output_table
 # from FiScrape.spiders.FiSpider import query
 import logging
 from ln_meta import uri as uri

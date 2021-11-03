@@ -1,8 +1,6 @@
 from http.cookies import SimpleCookie
 from urllib.parse import urlparse, parse_qs, urlencode
 import json
-from FiScrape.search import query
-# query = 'bitcoin'
 
 # CNBC
 CNBC_URL = f'https://api.queryly.com/cnbc/json.aspx?queryly_key=31a35d40a9a64ab3&query={query}&endindex=0&batchsize=10&callback=&showfaceted=false&timezoneoffset=-240&facetedfields=formats&facetedkey=formats%7C&facetedvalue=!Press%20Release%7C&sort=date&additionalindexes=4cd6f71fbf22424d,937d600b0d0d4e23,3bfbe40caee7443e,626fdfcd96444f28'

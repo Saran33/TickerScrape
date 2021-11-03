@@ -1,10 +1,6 @@
-html_url = 'https://www.cnbc.com/search/?query=Bitcoin&qsearchterm=Bitcoin'
-
-article_url = "https://www.cnbc.com/2021/10/13/cryptocurrencies-could-lead-to-financial-instability-author-warns.html"
-
 scrapy shell --nolog
-
-fetch(article_url)
+url = 'https://www.marketwatch.com/tools/markets/stocks'
+fetch(url)
 
 docker run -it -p 8050:8050 scrapinghub/splash --disable-private-mode --dns 8.8.8.8
 splash.private_mode_enabled = False

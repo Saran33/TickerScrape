@@ -1,39 +1,21 @@
 import scrapy
 from scrapy.loader import ItemLoader
-from FiScrape.items import FtArtItem, convert_ft_dt
-from FiScrape.search import query, start_date
+from TickerScrape.items import FtArtItem, convert_ft_dt
 from unicodedata import normalize
 from bs4 import BeautifulSoup
 import grequests
 
-# from ln_meta import ft_user,ft_pass,wsj_user,wsj_pass
-# class LoginSpider(scrapy.Spider):
-#     name = 'ftlog'
-#     start_urls = ['http://www.example.com/users/login.php']
 
-#     def parse(self, response):
-#         return scrapy.FormRequest.from_response(
-#             response,
-#             formdata={'username': f'{ft_user}', 'password': f'{ft_pass}'},
-#             callback=self.after_login
-#         )
-
-#     def after_login(self, response):
-#         # check login succeed before going on
-#         if "authentication failed" in response.body:
-#             self.logger.error("Login failed")
-#             return
-
-class FtSpider(scrapy.Spider):
+class MWStocksSpider(scrapy.Spider):
     '''
-    Spider for the Financial Times.
-    name :  'ft'
+    Spider for MarketWatch stock ticker data.
+    name :  'mw'
     '''
-    name = "ft"
+    name = "mw"
 
-    # allowed_domains = ['ft.com']
-    # domain_name ='https://www.ft.com'
-    start_urls = [f"https://www.ft.com/search?q={query}&sort=date"]
+    # allowed_domains = ['marketwatch.com']
+    # domain_name ='https://www.marketwatch.com'
+    start_urls = [f"https://www.marketwatch.com/tools/markets/stocks"]
 
     def parse(self, response):
         self.logger.info('Parse function called on {}'.format(response.url))
