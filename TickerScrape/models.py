@@ -8,7 +8,7 @@ from scrapy.utils.project import get_project_settings
 
 Base = declarative_base()
 
-#CONNECTION_STRING = 'sqlite:///FiScrape.db'
+# CONNECTION_STRING = 'sqlite:///TickerScrape.db'
 
 
 def db_connect():
@@ -30,211 +30,178 @@ def create_table(engine):
 #     DeclarativeBase.metadata.create_all(engine)
 
 
-# Association Table for Many-to-Many relationship between Article and Author
-# https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html#many-to-many
-authors_association = Table('authors_association', Base.metadata,
-                            Column('article_id', Integer, ForeignKey(
-                                'article.id'), primary_key=True),
-                            Column('author_id', Integer, ForeignKey(
-                                'author.id'), primary_key=True)
+# Association Table for Many-to-Many relationship between Security and Country
+countries_association = Table('countries_association', Base.metadata,
+                            Column('security_id', Integer, ForeignKey(
+                                'security.id'), primary_key=True),
+                            Column('country_id', Integer, ForeignKey(
+                                'country.id'), primary_key=True)
                             )
 
-# Association Table for Many-to-Many relationship between Article and Topic
-# https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html#many-to-many
-topics_association = Table('topics_association', Base.metadata,
-                           Column('article_id', Integer, ForeignKey(
-                               'article.id'), primary_key=True),
-                           Column('topic_id', Integer, ForeignKey(
-                               'topic.id'), primary_key=True)
+# Association Table for Many-to-Many relationship between Security and Sector
+industries_association = Table('industries_association', Base.metadata,
+                           Column('security_id', Integer, ForeignKey(
+                               'security.id'), primary_key=True),
+                           Column('industry_id', Integer, ForeignKey(
+                               'industry.id'), primary_key=True)
                            )
 
-# Association Table for Many-to-Many relationship between Article and Tag
-# https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html#many-to-many
+# Association Table for Many-to-Many relationship between Security and Exchange
+exchanges_association = Table('exchanges_association', Base.metadata,
+                         Column('security_id', Integer, ForeignKey(
+                             'security.id'), primary_key=True),
+                         Column('exchange_id', Integer, ForeignKey(
+                             'exchange.id'), primary_key=True)
+                         )
+
+# Association Table for Many-to-Many relationship between Security and Tag
 tags_association = Table('tags_association', Base.metadata,
-                         Column('article_id', Integer, ForeignKey(
-                             'article.id'), primary_key=True),
+                         Column('security_id', Integer, ForeignKey(
+                             'security.id'), primary_key=True),
                          Column('tag_id', Integer, ForeignKey(
                              'tag.id'), primary_key=True)
                          )
 
-
-class Article(Base):
-    __tablename__ = "article"
+class Security(Base):
+    __tablename__ = "security"
 
     id = Column(Integer, primary_key=True)
-    published_date = Column('published_date', DateTime)
-    headline = Column('headline', Text(), nullable=False)
-    standfirst = Column('standfirst', Text())
+    ticker = Column('ticker', Text(), nullable=False)
+    name = Column('name', Text())
+    industry = Column('industry', Text(), default=None)
+    beta = Column('beta', Float, default=None)
+    average_rec = Column('average_rec', Text(), default=None)
+    market_cap = Column('market_cap', Float, default=None)
+    pe_ratio = Column('pe_ratio', Float, default=None)
+    short_int = Column('short_int', Float, default=None)
+    price_to_sales = Column('price_to_sales', Float, default=None)
+    price_to_book = Column('price_to_book', Float, default=None)
+    price_to_fcf = Column('price_to_fcf', Float, default=None)
+    net_margin = Column('net_margin', Float, default=None)
+    roc = Column('roc', Float, default=None)
+    roi = Column('roi', Float, default=None)
+    debt_to_equity = Column('debt_to_equity', Float, default=None)
+    debt_to_assets = Column('debt_to_assets', Float, default=None)
+    current_ratio = Column('current_ratio', Float, default=None)
+    quick_ratio = Column('quick_ratio', Float, default=None)
+    cash_ratio = Column('cash_ratio', Float, default=None)
     summary = Column('summary', Text(), default=None)
-    image_caption = Column('image_caption', Text(), default=None)
-    content = Column('content', Text(), default=None)
-    footnote = Column('footnote', Text(), default=None)
-    article_link = Column('article_link', Text())
-    origin_link = Column('origin_link', Text())
-    # , nullable=False)  # Many articles to one source
-    source_id = Column(Integer, ForeignKey('source.id'))
-    #source = relationship('Source', backref='articles', nullable=False)
-    authors = relationship('Author', secondary='authors_association',
-                           lazy='dynamic', backref="article", overlaps="article,authors")  # M-to-M for article and authors
-    topics = relationship('Topic', secondary='topics_association',
-                          lazy='dynamic', backref="article", overlaps="article,topics")  # M-to-M for article and topic
-    tags = relationship('Tag', secondary='tags_association',
-                        lazy='dynamic', backref="article", overlaps="article,tags")  # M-to-M for article and tag
-    # 1-to-1 for article and snip_blob
-    snip_blob = relationship(
-        'SnipBlob', back_populates='article', uselist=False)
-    blob = relationship('Blob', back_populates='article',
-                        uselist=False)  # 1-to-1 for article and blob
-    # 1-to-1 for article and snip_vader
-    snip_vader = relationship(
-        'SnipVader', back_populates='article', uselist=False)
-    vader = relationship('Vader', back_populates='article',
-                         uselist=False)  # 1-to-1 for article and vader
+    inception_date = Column('inception_date', DateTime, default=None)
+    # Many securities to one asset class
+    asset_class_id = Column(Integer, ForeignKey('asset_class.id'))
+    countries = relationship('Country', secondary='countries_association',
+                           lazy='dynamic', backref="security", overlaps="security,countries")  # M-to-M for securities and countries
+    industries = relationship('Industry', secondary='industries_association',
+                          lazy='dynamic', backref="security", overlaps="security,industries")  # M-to-M for security and topic
+    exchanges = relationship('Exchange', secondary='exchanges_association',
+                        lazy='dynamic', backref="security", overlaps="security,exchanges")  # M-to-M for security and tag
+    # 1-to-1 for security and signal
+    signal = relationship(
+        'Signal', back_populates='security', uselist=False)
     # def __repr__(self):
-    #     return "<{0} Id: {1} - Published: {2} Headline: {3} Standfirst: {4} Source_id: {5} URL: {6}>".format(self.__class__name, self.id,
-    #             self.published_date, self.headline, self.standfirst, self.link)
+    #     return "<{0} Id: {1} - Ticker: {2}, Name: {3}, Industry: {4} Beta: {5} Analyst Rec: {6} Mkt. Cap: {7}>".format(self.__class__name, self.id,
+    #             self.ticker, self.name, self.industry, self.beta, self.average_rec, self.market_cap)
 
+class AssetClass(Base):
+    __tablename__ = "asset_class"
 
-class Topic(Base):
-    __tablename__ = "topic"
+    id = Column(Integer, primary_key=True)
+    name = Column('name', String(150), unique=True)
+    securities = relationship('security', backref='asset_class', lazy='dynamic')
+
+    def __repr__(self):
+        # return "<{0} Id: {1} - Name: {2}>".format(self.__class__name, self.id,
+        #         self.name)
+        return "<{0} Id: {1} - Name: {2}>".format(self.__tablename__, self.id,
+                                                  self.name)
+
+class Country(Base):
+    __tablename__ = "country"
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(30), unique=True)  # , nullable=False)
-    articles = relationship('Article', secondary='topics_association',
-                            lazy='dynamic', backref="topic", overlaps="article,topics")  # M-to-M for article and topic
+    continent = Column('continent', String(30), default=None)
+    region = Column('region', String(30), default=None)
+    geo_market = Column('geo_market', String(30), default=None)
+    currency_id = Column(Integer, ForeignKey('currency.id'))
+    cb_on_rate = Column('cb_on_rate', Float, default=None)
+    last_rate_change = Column('last_rate_change', DateTime, default=None)
+    last_m_infl = Column('last_m_infl', Float, default=None)
+    gdp = Column('gdp', Float, default=None)
+    gnp = Column('gnp', Float, default=None)
+    securities = relationship('security', secondary='countries_association',
+                            lazy='dynamic', backref="country", overlaps="security,countries")  # M-to-M for security and topic
     # def __repr__(self):
-    #     return "<{0} Id: {1} - Topic: {2} Headline: {3}>".format(self.__class__name, self.id,
-    #             self.name)
+    #     return "<{0} Id: {1} - Name: {2} Continent: {3}, Region: {4}, Geopol. Group: {5}>".format(self.__class__name, self.id,
+    #             self.name, self.continent, self.region, self.geo_region)
 
 
-class Source(Base):
-    __tablename__ = "source"
+class Currency(Base):
+    __tablename__ = "currency"
 
     id = Column(Integer, primary_key=True)
-    name = Column('name', String(50), unique=True)  # , nullable=False)
-    inception = Column('inception', DateTime, default=None)
-    location = Column('location', String(150), default=None)
-    about = Column('about', Text(), default=None)
-    # Add https://www.allsides.com/media-bias/media-bias-ratings?field_featured_bias_rating_value=All&field_news_source_type_tid%5B2%5D=2&field_news_bias_nid_1%5B1%5D=1&field_news_bias_nid_1%5B2%5D=2&field_news_bias_nid_1%5B3%5D=3&field_news_bias_nid_1%5B4%5D=4&title=
-    bias = Column('bias', Text(), default=None)
-    # One author to many Articles
-    articles = relationship('Article', backref='source', lazy='dynamic')
+    name = Column('name', String(150), unique=True)
+    ticker = Column('ticker', String(50), unique=True)
+    countries = relationship('country', backref='currency', lazy='dynamic')
+    exchanges = relationship('exchange', backref='currency', lazy='dynamic')
 
     def __repr__(self):
-        # return "<{0} Id: {1} - Name: {2} Bias: {6} About: {5}>".format(self.__class__name, self.id,
-        #         self.name, self.bias, self.about)
+        # return "<{0} Id: {1} - Name: {2} Ticker: {3}>".format(self.__class__name, self.id,
+        #         self.name, self.ticker)
         return "<{0} Id: {1} - Name: {2}>".format(self.__tablename__, self.id,
                                                   self.name)
 
 
-class Author(Base):
-    __tablename__ = "author"
+class Industry(Base):
+    __tablename__ = "industry"
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(50), unique=True, default=None)
-    position = Column('position', String(150), default=None)
-    bio = Column('bio', Text(), default=None)
-    bio_link = Column('bio_link', Text(), default=None)
-    email = Column('email', String(50), default=None)
-    twitter = Column('twitter', String(36), default=None)
-    linkedin = Column('linkedin', String(36), default=None)
-    facebook = Column('facebook', String(36), default=None)
-    birthday = Column('birthday', DateTime, default=None)
-    bornlocation = Column('bornlocation', String(150), default=None)
-    articles = relationship('Article', secondary='authors_association',
-                            lazy='dynamic', backref="author", overlaps="article,authors")  # M-to-M for article and authors
+    sector = Column('sector', Text(), default=None)
+    beta = Column('beta', Float, default=None)
+    market_cap = Column('market_cap', Float, default=None)
+    pe_ratio = Column('pe_ratio', Float, default=None)
+    price_to_sales = Column('price_to_sales', Float, default=None)
+    price_to_book = Column('price_to_book', Float, default=None)
+    price_to_fcf = Column('price_to_fcf', Float, default=None)
+    net_margin = Column('net_margin', Float, default=None)
+    roc = Column('roc', Float, default=None)
+    roi = Column('roi', Float, default=None)
+    debt_to_equity = Column('debt_to_equity', Float, default=None)
+    debt_to_assets = Column('debt_to_assets', Float, default=None)
+    current_ratio = Column('current_ratio', Float, default=None)
+    quick_ratio = Column('quick_ratio', Float, default=None)
+    cash_ratio = Column('cash_ratio', Float, default=None)
+    securities = relationship('security', secondary='industries_association',
+                            lazy='dynamic', backref="industry", overlaps="security,industries")  # M-to-M for security and authors
     # def __repr__(self):
-    #     return "<{0} Id: {1} - Name: {2} Bio: {3} Twitter: {4} Email: {5}>".format(self.__class__name, self.id,
-    #             self.name, self.twitter, self.email)
+    #     return "<{0} Id: {1} - Name: {2} Sector: {3} Beta: {4} Mkt. Cap: {5}>".format(self.__class__name, self.id,
+    #             self.name, self.sector, self.market_cap)
     # __table__args = {'exted_existing':True}
-    # bias = Column('bias', Text()) # Add https://www.allsides.com/media-bias/media-bias-ratings?field_featured_bias_rating_value=All&field_news_source_type_tid%5B1%5D=1&field_news_bias_nid_1%5B1%5D=1&field_news_bias_nid_1%5B2%5D=2&field_news_bias_nid_1%5B3%5D=3&field_news_bias_nid_1%5B4%5D=4&title=
 
+class Exchange(Base):
+    __tablename__ = "exchange"
+
+    id = Column(Integer, primary_key=True)
+    name = Column('name', String(30), unique=True)  # , nullable=False)
+    country_id = Column(Integer, ForeignKey('country.id'))
+    timezone = Column(String(150), unique=True, default=None)
+    securities = relationship('security', secondary='exchanges_association',
+                            lazy='dynamic', backref="exchange", overlaps="security,exchanges")  # M-to-M for security and topic
+    # def __repr__(self):
+    #     return "<{0} Id: {1} - Name: {2} country_id: {3}>".format(self.__class__name, self.id,
+    #             self.name, self.country_id)
 
 class Tag(Base):
     __tablename__ = "tag"
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(30), unique=True, default=None)
-    articles = relationship('Article', secondary='tags_association',
-                            lazy='dynamic', backref="tag")  # , overlaps="article,tags")  # M-to-M for article and tag
+    securities = relationship('security', secondary='tags_association',
+                            lazy='dynamic', backref="tag")  # , overlaps="security,tags")  # M-to-M for security and tag
     # def __repr__(self):
     #     return "<{0} Id: {1} - Name: {2}>".format(self.__class__name, self.id,
     #             self.name)
 
-
-class SnipBlob(Base):
-    __tablename__ = "snip_blob"  # Blob sentiment scores for the headline and standfirst
-    # TextBlob, based on the Natural Language ToolKit (NLTK), sentiment scores.
-
-    id = Column(Integer, primary_key=True)
-    subjectivity = Column('subjectivity', Float, default=None)
-    polarity = Column('polarity', Float, default=None)
-    # article = relationship('Article', uselist=False, backref='snip_blob')  # One SnipBlob to one Article
-    # 1-to-1 for article and snip_blob
-    article_id = Column(Integer, ForeignKey('article.id'), unique=True)
-    article = relationship(
-        "Article", back_populates="snip_blob", uselist=False)
-#     def __repr__(self):
-#         # return "<{0} Id: {1} - Name: {2} Bias: {6} About: {5}>".format(self.__class__name, self.id,
-#         #         self.name, self.bias, self.about)
-#         return "<{0} Id: {1} - Subjectivity: {2} Polarity: {3} Article Id: {4}>".format(self.__class__name, self.id,
-#                 self.subjectivity, self.polarity, self.article.id)
-
-
-class Blob(Base):
-    __tablename__ = "blob"  # TextBlob sentiment scores for the main body
-    # TextBlob, based on the Natural Language ToolKit (NLTK), sentiment scores.
-
-    id = Column(Integer, primary_key=True)
-    subjectivity = Column('subjectivity', Float, default=None)
-    polarity = Column('polarity', Float, default=None)
-    article_id = Column(Integer, ForeignKey('article.id'),
-                        unique=True)  # One Blob to one Article
-    article = relationship("Article", back_populates="blob", uselist=False)
-#     def __repr__(self):
-#         # return "<{0} Id: {1} - Name: {2} Bias: {6} About: {5}>".format(self.__class__name, self.id,
-#         #         self.name, self.bias, self.about)
-#         return "<{0} Id: {1} - Subjectivity: {2} Polarity: {3} Article Id: {4}>".format(self.__class__name, self.id,
-#                 self.subjectivity, self.polarity,self.article.id)
-
-
-class SnipVader(Base):
-    __tablename__ = "snip_vader"  # Vader sentiment scores for the headline and standfirst
-    # Valence Aware Dictionary and sEntiment Reasoning lexicon-based sentiment scores
-
-    id = Column(Integer, primary_key=True)
-    compound = Column('compound', Float, default=None)
-    negative = Column('negative', Float, default=None)
-    neutral = Column('neutral', Float, default=None)
-    positive = Column('positive', Float, default=None)
-    article_id = Column(Integer, ForeignKey('article.id'),
-                        unique=True)  # One SnipVader to one Article
-    article = relationship(
-        "Article", back_populates="snip_vader", uselist=False)
-#     def __repr__(self):
-#         # return "<{0} Id: {1} - Name: {2} Bias: {6} About: {5}>".format(self.__class__name, self.id,
-#         #         self.name, self.bias, self.about)
-#         return "<{0} Id: {1} - Compound: {2} Negative: {3} Neutral: {4} Positive: {5} Article Id: {6}>".format(self.__class__name, self.id,
-#                 self.compound, self.negative, self.neutral, self.positive, self.article.id)
-
-
-class Vader(Base):
-    __tablename__ = "vader"  # Vader sentiment scores for the main body
-    # Valence Aware Dictionary and sEntiment Reasoning lexicon-based sentiment scores
-
-    id = Column(Integer, primary_key=True)
-    compound = Column('compound', Float, default=None)
-    negative = Column('negative', Float, default=None)
-    neutral = Column('neutral', Float, default=None)
-    positive = Column('positive', Float, default=None)
-    article_id = Column(Integer, ForeignKey('article.id'),
-                        unique=True)  # One Vader to one Article
-    article = relationship("Article", back_populates="vader", uselist=False)
-#     def __repr__(self):
-#         # return "<{0} Id: {1} - Name: {2} Bias: {6} About: {5}>".format(self.__class__name, self.id,
-#         #         self.name, self.bias, self.about)
-#         return "<{0} Id: {1} - Compound: {2} Negative: {3} Neutral: {4} Positive: {5} Article Id: {6}>".format(self.__class__name, self.id,
-#                 self.compound, self.negative, self.neutral, self.positive, self.article.id)
-
 # from sqlalchemy.orm import aliased
-# Sentiment = aliased(SnipVader)
+# Sector = aliased(Industry)

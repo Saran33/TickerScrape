@@ -85,8 +85,7 @@ ITEM_PIPELINES = {
    # 'TickerScrape.pipelines.TestSpiderPipeline': 90,
    # 'TickerScrape.pipelines.TickerScrapePipeline': 100,
    'TickerScrape.pipelines.DuplicatesPipeline': 200,
-   'TickerScrape.pipelines.SaveArticlesPipeline': 300,
-   # 'TickerScrape.pipelines.SentimentPipeline': 400,
+   'TickerScrape.pipelines.SaveSecuritiesPipeline': 300,
 }
 
 CONNECTION_STRING = 'sqlite:///sqlite_files/TickerScrape.db'

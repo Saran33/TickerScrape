@@ -1,4 +1,4 @@
 # Logins
 
 # FiScrape Database URI
-uri = 'sqlite:///FiScrape.db'
+uri = 'sqlite:///TickerScrape.db'

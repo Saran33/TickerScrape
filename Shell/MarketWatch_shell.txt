@@ -2,426 +2,61 @@ scrapy shell --nolog
 url = 'https://www.marketwatch.com/tools/markets/stocks'
 fetch(url)
 
-docker run -it -p 8050:8050 scrapinghub/splash --disable-private-mode --dns 8.8.8.8
-splash.private_mode_enabled = False
-
-http_user = 'user'
-http_pass = 'userpass'
-
-goog_bot = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-mac = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36'
-
-from w3lib.http import basic_auth_header
-http_user = 'user'
-http_pass = 'userpass'
-auth = basic_auth_header(http_user, http_pass)
-
-req = SplashRequest(url,
-                    endpoint = 'execute',
-                    args = {'lua_source': script, 'wait': 5.0}, headers={'Authorization': auth})
-
-######################################## 13/10/21
-scrapy shell
-
-js_url  = 'http://localhost:8050/render.html?url=https://www.cnbc.com/2021/10/13/cryptocurrencies-could-lead-to-financial-instability-author-warns.html'
-fetch(js_url)
-
-script="""
-function main(splash, args)
-    splash:on_request(function(request)
-        if request.url:find('css') then
-            request.abort()
-        end
-    end)
-    splash.images_enabled = false
-    assert(splash:go(args.url))
-    splash:wait((args.wait))
-    splash:wait((args.wait))
-    return splash:html()
-end
-"""
-
-from scrapy_splash import SplashRequest
-
-url = "https://www.cnbc.com/2021/10/13/cryptocurrencies-could-lead-to-financial-instability-author-warns.html"
-scrapy shell
-url ="https://www.cnbc.com/2021/10/13/stock-market-futures-open-to-close-news.html"
-url = "https://www.cnbc.com/2021/10/14/cramer-says-he-will-sell-half-of-his-ether-if-regulators-approve-bitcoin-etfs.html"
-
-req = SplashRequest(url,
-                    endpoint = 'execute',
-                    args = {'lua_source': script, 'wait': 1.0})
-
-fetch(req)
-
-response.css('html').get()
-
-author_name = response.xpath('//div[@class="Author-authorNameAndSocial"]/a[@class="Author-authorName"]/text()').get()
-author_url = response.xpath('//div[@class="Author-authorNameAndSocial"]/a[@class="Author-authorName"]/@href').get()
-
-authors = response.xpath('//div[@class="Author-authorNameAndSocial"]')
-for author in authors:
-    author_name = author.xpath('.//a[@class="Author-authorName"]/text()').get()
-    author_url = author.xpath('.//a[@class="Author-authorName"]/@href').get()
-    author_twitter = author.xpath('.//a[@class="Author-authorTwitter"]/@href').get()
-    print(author_name)
-    print(author_url)
-    print(author_twitter)
-
-article_summary = response.xpath('//div[@class="RenderKeyPoints-list"]//li').getall()
-
-image_caption = response.xpath('//div[@class="InlineImage-imageEmbedCaption"]/text()').get()
-
-article_content = response.xpath('//div[@class="ArticleBody-articleBody"]').getall()
-
-img_credit = response.xpath('//div[@class="InlineImage-imageEmbedCredit"]/text()').get()
-article_content = [x.replace(img_credit, '').replace(image_caption, '') for x in article_content]
-article_content
-
-import bleach
-def bleach_html(text):
-    tags = ['p', 'li', 'strong', 'b', 'em', 'u', 'i', 'mark', 's', 'sub', 'br', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'small']
-    attrs = [None]
-    return [bleach.clean(text, tags=tags, attributes=attrs, strip=True)]
-
-from unicodedata import normalize
-def remove_articles(text):
-    # strip the unicode articles
-    #text = normalize("NFKD", text.strip(u'\u201c'u'\u201d'))
-    text = normalize("NFKD", ''.join(map(str, text)).replace('  ', ' ').strip())
-    return text
-
-for line in article_content:
-    clean_content = bleach_html(line)
-clean_content
-
-for line in clean_content:
-    content = remove_articles(line)
-content = content.replace('  ', ' ').strip()
-content
-
-
-js_url  = 'http://localhost:8050/render.html?url=https://www.cnbc.com/annie-nova/'
-fetch(js_url)
-
-scrapy shell
-bio_url = "https://www.cnbc.com/annie-nova/"
-
-bio_url = "https://www.cnbc.com/jeff-cox/"
-bio_url = "https://www.cnbc.com/matthew-j-belvedere/?&qsearchterm=Matt%20Belvedere"
-fetch(bio_url)
-
-script="""
-function main(splash, args)
-    splash:on_request(function(request)
-        if request.url:find('css') then
-            request.abort()
-        end
-    end)
-    splash.images_enabled = false
-    assert(splash:go(args.url))
-    splash:wait((args.wait))
-    splash:select('button.RenderBioDetails-bioToggleBtn'):mouse_click()
-    splash:runjs('document.querySelector("button.RenderBioDetails-bioToggleBtn").submit()')
-    splash:wait((args.wait))
-    return splash:html()
-end
-"""
-
-document.querySelector("#\\30  > section > div.RenderBioDetails-bioWrapper > div:nth-child(2) > button"):mouse_click()
-
-script="""
-function main(splash, args)
-    splash:on_request(function(request)
-        if request.url:find('css') then
-            request.abort()
-        end
-    end)
-    splash.images_enabled = false
-    assert(splash:go(args.url))
-    splash:wait((args.wait))
-    splash:runjs('document.querySelector("button.RenderBioDetails-bioToggleBtn").submit()')
-    splash:wait((args.wait))
-    return splash:html()
-end
-"""
-
-from scrapy_splash import SplashRequest
-req = SplashRequest(bio_url,
-                    endpoint = 'execute',
-                    args = {'lua_source': script, 'wait': 5.0})
-
-
-fetch(req)
-response.css('html').get()
-with open('initial_response.html', 'wb') as  f:
-    f.write(response.body)
-
-response.xpath('//*[@id="0"]/section/div[1]/div[2]/h1').get()
-
-author_position = response.xpath('//span[@class="RenderBioDetails-jobTitle"]/text()').get().strip()
-author_bio = response.xpath('//div[@class="RenderBioDetails-bioText"]//text()').getall()
-
-author_bio = response.xpath('//div[@class="RenderBioDetails-bioText"]/span/text()').getall()
-
-author_fb = response.xpath('.//a[@class="icon-social_facebook"]/@href').get()
-
-document.querySelectorAll('*:not(p, p *)')
-
-script="""
-function main(splash, args)
-    splash:on_request(function(request)
-        if request.url:find('css') then
-            request.abort()
-        end
-    end)
-    splash.images_enabled = false
-    assert(splash:go(args.url))
-    splash:wait((5))
-    local element = splash:select("button.RenderBioDetails-bioToggleBtn")
-    local bounds = element:bounds()
-    element:mouse_click{x=bounds.width/2, y=bounds.height/2}
-    splash:wait((5))
-    return splash:html()
-end
-
-function main(splash, args)
-    splash:set_user_agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36')
-    splash.private_mode_enabled = False
-    splash.images_enabled = false
-    local num_scrolls = 10
-    local scroll_delay = 2.0
---    splash:set_viewport_size(1980, 8020)
-    local scroll_to = splash:jsfunc("window.scrollTo")
-    local get_body_height = splash:jsfunc(
-        "function() {return document.body.scrollHeight;}"
-    )
-    assert(splash:go(splash.args.url))
-splash:set_viewport_full()
-    splash:wait(5)
-splash:runjs("jQuery('span.icon-arrow-down-readmore').click();")
-    splash:wait(2)
-    for _ = 1, num_scrolls do
-        scroll_to(0, get_body_height())
-        splash:wait(scroll_delay)
-    end      
-
-    splash:wait(5)
-
-    return { 
-        html = splash:html(),
-        har = splash:har()
-    }
-end
-
-
-
-
-
-function main(splash, args)
---  splash.private_mode_enabled = false
-  splash:set_user_agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36')
-  assert(splash:go(args.url))
-  assert(splash:wait(10))
-  btn = splash:select('button.RenderBioDetails-bioToggleBtn')
-  btn:mouse_click()
---  btn.style.border = "1px solid #002f6c"
-  assert(splash:wait(10))
-  return {
-    num = #splash:select('button.RenderBioDetails-bioToggleBtn'),
-    html = splash:html(),
-    png = splash:png(),
-    har = splash:har(),
-  }
-end
-
-function main(splash, args)
---  splash.private_mode_enabled = false
-  splash:set_user_agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36')
-  assert(splash:go(args.url))
-  assert(splash:wait(10))
---  btn = splash:select('button.RenderBioDetails-bioToggleBtn')
-  splash:runjs('document.getElementsByClassName("RenderBioDetails-bioToggleBtn")[0].click()')
---  btn:mouse_click()
---  btn.style.border = "1px solid #002f6c"
-  assert(splash:wait(10))
-  return {
-    html = splash:html(),
-    png = splash:png(),
-    har = splash:har(),
-  }
-end
-
-
-document.getElementsByClassName("RenderBioDetails-bioToggleBtn")[0].click()
-
-
-splash:runjs('document.getElementsByClassName("RenderBioDetails-bioToggleBtn")[0].click()')
-
-
-#############################################
-
-scrapy shell
-bio_url = "https://www.cnbc.com/jeff-cox/"
-fetch(bio_url)
-
-bio_script="""
-    function main(splash, args)
-    --  splash.private_mode_enabled = false
-    splash:set_user_agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36')
-    assert(splash:go(args.url))
-    assert(splash:wait(5))
-    --  btn = splash:select('button.RenderBioDetails-bioToggleBtn')
-    splash:runjs('document.getElementsByClassName("RenderBioDetails-bioToggleBtn")[0].click()')
-    splash:evaljs('document.querySelector("#div-gpt-boxinline-119696774 > script")')
-    --  btn:mouse_click()
-    --  btn.style.border = "1px solid #002f6c"
-    assert(splash:wait(5))
-    return {
-        html = splash:html(),
-        png = splash:png(),
-        har = splash:har(),
-    }
-    end
-"""
-local expanded = splash:evaljs('document.querySelector("#div-gpt-boxinline-119696774 > script")')
-
-
-from scrapy_splash import SplashRequest
-req = SplashRequest(bio_url,
-                    endpoint = 'execute',
-                    args = {'lua_source': bio_script, 'wait': 5.0})
-
-fetch(req)
-
-with open('initial_response.html', 'wb') as  f:
-    f.write(response.body)
-
-
-
-js_script = response.xpath('script[contains("routing")]').getall()
-js_script = response.xpath('//body/script[2]').getall()
-js_script
-
-response.xpath('//script[charset="UTF-8"]')
-import re
-string = (re.sub('[\s+;]','',response.xpath('//body/script/text()')[2].extract()))
-string
-
-
-
-# This::
-bio_url = "https://www.cnbc.com/matthew-j-belvedere/?&qsearchterm=Matt%20Belvedere"
-fetch(bio_url)
-
-items = response.xpath('//script[contains(., "locationBeforeTransitions")]/text()')
-txt = items.extract_first()
-txt
-
-with open('script_dict.json', 'w') as  f:
-    f.write(txt)
-    f.close()
-
-key, value = txt.split("=", 1)
-script_dict = {key: value}
-print(script_dict)
-
-
-with open('script_dict.json', 'w') as  f:
-    f.write(txt)
-    f.close()
-
-def index_of_nth(longstring, substring, n):
-   return len(substring.join(longstring.split(substring)[: n]))
-
-start = txt.find('modules', txt.find('modules')+1) +10
-start
-end = index_of_nth(txt, 'column', 4) - 16
-end
-
-json_string = txt[start:end]
-
-
-with open('script_dict2.json', 'w') as  f:
-    f.write(json_string)
-    f.close()
-
-import json
-data = json.loads(json_string)
-data
-
-body = data.get('data').get('body')
-content = body.get('content')
-p_tags = content[0].get('children')
-
-author_bio = []
-for i in range(len(p_tags)):
-    # author_bio.append(' '.join(p_tags[i].get('children')))
-    author_bio.append(''.join(map(str, p_tags[i].get('children'))))
-author_bio = ' '.join(author_bio)
-print(author_bio)
-
-p_tags[4].get('children')
-
-
-
-#############################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-sort_script="""
-function main(splash, args)
-    splash.private_mode_enabled = False
-    assert(splash:go(args.url))
-    splash:wait((args.wait))
-    splash:select('button.SearchResults-searchResultsSort'):mouse_click()
-    splash:wait((args.wait))
-    return splash:html()
-end
-"""
-
-sort_script="""
-function main(splash)
-    splash.private_mode_enabled = False
-    assert(splash:go('https://www.cnbc.com/search/?query=Bitcoin&qsearchterm=Bitcoin'))
-    splash:wait(5.0)
-    
-    splash:wait(5.0)
-    return splash:html()
-end
-"""
-
-
-script = """
-    function main(splash, args)
-        splash.private_mode_enabled = False
-        splash:init_cookies(splash.args.cookies)
-        assert(splash:go{
-        splash.args.url,
-        headers=splash.args.headers,
-        http_method=splash.args.http_method,
-        body=splash.args.body,
-        })
-        assert(splash:wait(15))
-
-        local entries = splash:history()
-        local last_response = entries[#entries].response
-        return {
-        url = splash:url(),
-        headers = last_response.headers,
-        http_status = last_response.status,
-        cookies = splash:get_cookies(),
-        html = splash:html(),
-        }
-    end
-"""
+asset_class = response.xpath('//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get()
+
+countries = response.xpath('//*[@id="marketsindex"]/ul[@class="list-unstyled"]/li/a')
+for country in countries:
+    country_name = country.xpath('.//text()').get()
+    country_link = country.xpath('.//@href').get()
+    print (country_link)
+
+country_url = 'https://www.marketwatch.com/tools/markets/stocks/country/argentina'
+country_url = 'https://www.marketwatch.com/tools/markets/stocks/country/united-states'
+fetch(country_url)
+
+country_name = response.xpath('//*[@id="marketsindex"]/h2/text()').get()
+country_name = country_name.replace('Location: ', '')
+
+stocks = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
+for stock in stocks:
+    sec_name = stock.xpath('.//a/text()').get()
+    # print (sec_name)
+    ticker = stock.xpath('.//td[2]/text()').get()
+    industry = stock.xpath('.//td[3]/text()').get()
+    print (industry)
+    sec_link = stock.xpath('.//a/@href').get()
+    print(sec_link)
+
+if response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li[@class="active"]/span/text()').get() == '1':
+    next_page = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[:-1].getall()
+    print (next_page)
+
+sec_url = 'https://www.marketwatch.com/investing/stock/aapl'
+fetch(sec_url)
+
+beta = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[7]/span[1]/text()').get()
+market_cap = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[4]/span[1]/text()').get()
+pe_ratio = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[9]/span[1]/text()').get()
+short_int = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[14]/span[1]/text()').get()
+price_to_sales = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[9]/span[1]/text()').get()
+
+import time
+%timeit profile_url = response.xpath('//*[@class="list list--subnav horizontal"]/li[4]/a/@href').get()
+%timeit profile_url = response.xpath('//a[@instrument-target="financials"]/@href').get()
+
+profile_url = 'https://www.marketwatch.com/investing/stock/aapl/company-profile?mod=mw_quote_tab'
+fetch(profile_url)
+
+price_to_sales = response.xpath('//table[@aria-label="VALUATION data table"]/tbody/tr[4]/td[2]/text()').get()
+price_to_book = response.xpath('//table[@aria-label="VALUATION data table"]/tbody/tr[5]/td[2]/text()').get()
+price_to_fcf = response.xpath('//table[@aria-label="VALUATION data table"]/tbody/tr[6]/td[2]/text()').get()
+net_margin = response.xpath('//table[@aria-label="PROFITABILITY data table"]/tbody/tr[4]/td[2]/text()').get()
+roc = response.xpath('//table[@aria-label="PROFITABILITY data table"]/tbody/tr[7]/td[2]/text()').get()
+roi = response.xpath('//table[@aria-label="PROFITABILITY data table"]/tbody/tr[8]/td[2]/text()').get()
+debt_to_equity = response.xpath('//table[@aria-label="CAPITALIZATION data table"]/tbody/tr[1]/td[2]/text()').get()
+debt_to_ass = response.xpath('//table[@aria-label="CAPITALIZATION data table"]/tbody/tr[3]/td[2]/text()').get()
+current_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[1]/td[2]/text()').get()
+quick_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[2]/td[2]/text()').get()
+cash_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[3]/td[2]/text()').get()
+
+sec_summary = response.xpath('//p[@class="description__text"]/text()').get()
