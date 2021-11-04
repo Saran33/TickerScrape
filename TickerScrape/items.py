@@ -16,9 +16,48 @@ from dateutil import parser
 from unicodedata import normalize
 import re
 import bleach
+from numerizer import numerize as rev_numerize
+from numerize.numerize import numerize
 
 def strip_stock_country(text):
     return text.replace('Location: ', '')
+
+def to_float(float_str):
+    return float(float_str)
+
+def curr_str_to_float(cur_str, symbol='$'):
+    '''Convert a currency string-formatted number into a float.'''
+
+    num_strs = ['thousand', 'million', 'billion', 'trillion']
+    for x in num_strs:
+        if x in cur_str.lower():
+            str_num_1 = cur_str.lower().replace(x, '').replace(',','').replace(symbol,'')
+    # str_num_1 = [cur_str.replace(x, '') for x in num_strs if x in cur_str.lower()]
+    print(str_num_1)
+    if str_num_1 == cur_str:
+        str_num_1 = cur_str.replace('M', '').replace('B', '').replace('T', '').replace(',','').replace(symbol,'')
+    print (str_num_1)
+    if 'm' in cur_str.lower():
+        fl_num = float(str_num_1) * 1000000
+    elif 'b' in cur_str.lower():
+        fl_num = float(str_num_1) * 1000000000
+    elif 'thousand' in cur_str.lower():
+        fl_num = float(str_num_1) * 1000
+    elif ('T' in cur_str) or ('trillion' in cur_str.lower()):
+        fl_num = float(str_num_1) * 1000000000000
+    # print ("${0:,.2f}".format(fl_num))
+    return fl_num
+
+def float_to_curr_str(cur_float, symbol='$', decimals=0):
+    '''Convert a float into a human readable shorthand format, using the numerize module.
+        Then format the number with a currency symbol.'''
+    cur_str = symbol + numerize(cur_float, decimals)
+    return cur_str
+
+def perc_str_to_float(perc_str):
+    '''Convert a percentage string-formatted number into a float.'''
+    fl_num = float(perc_str.lower().replace(',','').replace('%',''))
+    return fl_num / 100
 
 def strp_dt(text):
     """
@@ -92,21 +131,15 @@ def join_str_lst(text):
 def remove_articles(text):
     # strip the unicode articles
     #text = normalize("NFKD", text.strip(u'\u201c'u'\u201d'))
-    text = normalize("NFKD", ''.join(map(str, text)).replace('  ', ' ').strip())
+    text = normalize("NFKD", ''.join(map(str, text)).replace('  ', ' '))
     return text
 
 def remove_space(text):
     # strip the unicode articles
-    return text.replace('  ', ' ').strip()
+    return text.replace('  ', ' ')
     # .lstrip()
     # .rstrip()
     # For X- path, you can also use: normalize-space
-
-def extract_headline(text):
-    #text = "".join(text)
-    #text = text.strip(u'\u201c'u'\u201d')
-    text = text.replace('  ', ' ')
-    return text
 
 def extract_standfirst(text):
     #text =  "".join(text)
@@ -171,41 +204,9 @@ def strip_ft_bio(text):
 def index_of_nth(longstring, substring, n):
    return len(substring.join(longstring.split(substring)[: n]))
 
-def remove_mail_to(text):
-    return text.replace("mailto:", '').strip()
-
-def add_ft_domain(text):
-    domain_name ='https://www.ft.com'
-    return f"{domain_name}{text}".strip()
-
-def add_bi_domain(text):
-    domain_name ='https://www.businessinsider.com'
-    return f"{domain_name}{text}".strip()
-
-def add_bbc_domain(text):
-    domain_name ='https://www.bbc.co.uk'
-    return f"{domain_name}{text}".strip()
-
-def add_zh_domain(text):
-    domain_name ='https://www.zerohedge.com'
-    return f"{domain_name}{text}".strip()
-
-def add_cnbc_domain(text):
-    domain_name ='https://www.cnbc.com'
-    return f"{domain_name}{text}".strip()
-
 # def add_domain(text):
 #     # Add a domain to a url extension
 #     text = f"{allowed_domains+text}"
-
-def parse_location(text):
-    # parse location "in Ulm, Germany"
-    # this simply remove "in ", you can further parse city, state, country, etc.
-    return text[3:]
-
-def strip_bbc_h2(text):
-    return  text.replace(' class="ssrcss-1s5ma9r-StyledHeading e1fj1fc10"', '').replace('class="ssrcss-1s5ma9r-StyledHeading e1fj1fc10', '').replace(
-        ' class="ssrcss-1s5ma9r-StyledHeading ', '').replace('e1fj1fc10"', '')
 
 def strp_class(text):
     """Strips the class attribute from HTML tags."""
@@ -218,9 +219,6 @@ def bleach_html(text):
     text = bleach.clean(text, tags=tags, attributes=attrs, strip=True)
     text = text.replace('<p></p>', '').replace('<p> </p>', '').replace('<p> </p>', '').replace('<strong></strong>', '').replace('<em></em>', '')
     return [text]
-
-def remove_read_more(text):
-    return text.replace(' read more ', '')
 
 def remove_p_tspace(text):
     return text.replace(' </p>', '</p>')
@@ -237,41 +235,84 @@ class TestItem(Item):
         )
 
 class MwSecurityItem(Item):
-    published_date = Field(
+    sec_name = Field(
         output_processor=TakeFirst()
         )
-    headline = Field(
-        input_processor=MapCompose(extract_headline),
-        output_processor=Join()
+    ticker = Field(
+        output_processor=TakeFirst()
         )
-    standfirst = Field(
-        input_processor=Compose(remove_articles),
-        output_processor=Identity()
+    asset_class = Field(
+        output_processor=TakeFirst()
         )
-    article_summary = Field(
-        input_processor=MapCompose(bleach_html, and_amp, extract_headline),
-        output_processor=Join()
+    country_name = Field(
+        output_processor=TakeFirst()
         )
-    image_caption = Field(
-        input_processor=MapCompose(and_amp, remove_articles),
-        output_processor=Join()
-        )
-    article_content = Field(
-        input_processor=MapCompose(bleach_html, remove_read_more, remove_p_tspace, and_amp, remove_articles, remove_space),
-        output_processor=Join()
-        )
-    article_footnote = Field(
-        input_processor=MapCompose(remove_articles),
-        output_processor=Join()
-        )
-    article_link = Field(
+    industry = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
         )
-    origin_link = Field(
-        input_processor=MapCompose(str.strip),
+    sec_beta = Field(
+        input_processor=MapCompose(to_float),
         output_processor=TakeFirst()
         )
-    authors = Field(input_processor=Identity()
+    market_cap = Field(
+        input_processor=MapCompose(curr_str_to_float),
+        output_processor=TakeFirst()
+        )
+    pe_ratio = Field(
+        input_processor=MapCompose(to_float),
+        output_processor=TakeFirst()
+        )
+    short_int = Field(
+        input_processor=MapCompose(curr_str_to_float),
+        output_processor=TakeFirst()
+        )
+    price_to_sales = Field(
+        input_processor=MapCompose(to_float),
+        output_processor=TakeFirst()
+        )
+    price_to_book = Field(
+        input_processor=MapCompose(to_float),
+        output_processor=TakeFirst()
+        )
+    price_to_fcf = Field(
+        input_processor=MapCompose(to_float),
+        output_processor=TakeFirst()
+        )
+    net_margin = Field(
+        input_processor=MapCompose(perc_str_to_float),
+        output_processor=TakeFirst()
+        )
+    roc = Field(
+        input_processor=MapCompose(perc_str_to_float),
+        output_processor=TakeFirst()
+        )
+    roi = Field(
+        input_processor=Compose(perc_str_to_float),
+        output_processor=TakeFirst()
+        )
+    debt_to_eq = Field(
+        input_processor=Compose(to_float),
+        output_processor=TakeFirst()
+        )
+    debt_to_ass = Field(
+        input_processor=Compose(to_float),
+        output_processor=TakeFirst()
+        )
+    current_ratio = Field(
+        input_processor=Compose(to_float),
+        output_processor=TakeFirst()
+        )
+    quick_ratio = Field(
+        input_processor=Compose(to_float),
+        output_processor=TakeFirst()
+        )
+    cash_ratio = Field(
+        input_processor=Compose(to_float),
+        output_processor=TakeFirst()
+        )
+    sec_summary = Field(
+        input_processor=Compose(remove_space, str.strip),
+        output_processor=TakeFirst()
         )
     tags = Field()

@@ -24,7 +24,7 @@ setup(
         'pandas','numpy', 'pytz', 'Scrapy>=2.5', 'SQLAlchemy>=1.4.25',
         'scrapy_splash @ git+https://github.com/Saran33/scrapy-splash.git',
         'grequests', 'beautifulsoup4', 'python-dateutil', 'pytz', 'tzlocal',
-        'scrapyrt', 'cookiecutter', 'autopep8', 'pylint','tkmacosx',
+        'scrapyrt', 'cookiecutter', 'autopep8', 'pylint','tkmacosx', 'numerize'
 ],
 	#package_dir={"": "src"},
     #packages=find_packages(where="FiScrape"),

@@ -54,6 +54,14 @@ exchanges_association = Table('exchanges_association', Base.metadata,
                              'exchange.id'), primary_key=True)
                          )
 
+# Association Table for Many-to-Many relationship between Countries and Currencies
+exchanges_association = Table('currencies_association', Base.metadata,
+                         Column('country_id', Integer, ForeignKey(
+                             'country.id'), primary_key=True),
+                         Column('currency_id', Integer, ForeignKey(
+                             'currency.id'), primary_key=True)
+                         )
+
 # Association Table for Many-to-Many relationship between Security and Tag
 tags_association = Table('tags_association', Base.metadata,
                          Column('security_id', Integer, ForeignKey(
@@ -123,16 +131,19 @@ class Country(Base):
     continent = Column('continent', String(30), default=None)
     region = Column('region', String(30), default=None)
     geo_market = Column('geo_market', String(30), default=None)
-    currency_id = Column(Integer, ForeignKey('currency.id'))
     cb_on_rate = Column('cb_on_rate', Float, default=None)
     last_rate_change = Column('last_rate_change', DateTime, default=None)
     last_m_infl = Column('last_m_infl', Float, default=None)
+    flag_url = Column('flag_url', Text(), default=None)
     gdp = Column('gdp', Float, default=None)
     gnp = Column('gnp', Float, default=None)
-    securities = relationship('security', secondary='countries_association',
+    # currency_id = Column(Integer, ForeignKey('currency.id'))
+    currencies = relationship('Security', secondary='currencies_association',
+                            lazy='dynamic', backref="country", overlaps="currency,countries")
+    securities = relationship('Security', secondary='countries_association',
                             lazy='dynamic', backref="country", overlaps="security,countries")  # M-to-M for security and topic
     # def __repr__(self):
-    #     return "<{0} Id: {1} - Name: {2} Continent: {3}, Region: {4}, Geopol. Group: {5}>".format(self.__class__name, self.id,
+    #     return "<{0} Id: {1} - Name: {2}, Continent: {3}, Region: {4}, Geopol. Group: {5}>".format(self.__class__name, self.id,
     #             self.name, self.continent, self.region, self.geo_region)
 
 
@@ -141,13 +152,18 @@ class Currency(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(150), unique=True)
-    ticker = Column('ticker', String(50), unique=True)
-    countries = relationship('country', backref='currency', lazy='dynamic')
+    ticker = Column('ticker', String(50), unique=True, default=None)
+    minor_unit = Column('minor_unit', Integer, default=None)
+    fund = Column('fund', Boolean, default=False)
+    description = Column('description', Text(), default=None)
+    # countries = relationship('Country', backref='currency', lazy='dynamic')
+    countries = relationship('Country', secondary='currencies_association',
+                          lazy='dynamic', backref="currency", overlaps="currency,countries")
     exchanges = relationship('exchange', backref='currency', lazy='dynamic')
 
     def __repr__(self):
-        # return "<{0} Id: {1} - Name: {2} Ticker: {3}>".format(self.__class__name, self.id,
-        #         self.name, self.ticker)
+        # return "<{0} Id: {1} - Name: {2}, Ticker: {3}, Minor Unit {4}, Fund {5}>".format(self.__class__name, self.id,
+        #         self.name, self.ticker, self.minor_unit, self.fund)
         return "<{0} Id: {1} - Name: {2}>".format(self.__tablename__, self.id,
                                                   self.name)
 

@@ -1,0 +1,250 @@
+Country,ISO_3166,Continent,Territory,Territory_of,Region,Econ_Group,G10,G20,IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20
+Afghanistan,AF,Asia,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Åland Islands,AX,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Albania,AL,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Algeria,DZ,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+American Samoa,AS,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Andorra,AD,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Angola,AO,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Anguilla,AI,North America,True,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Antarctica,AQ,,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Antigua and Barbuda,AG,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Argentina,AR,South America,False,,AMER,,False,True,True,False,False,False,False,True,False,False,True,True
+Armenia,AM,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Aruba,AW,North America,True,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Australia,AU,Oceania,False,,APAC,,False,True,False,False,False,False,False,False,False,False,False,False
+Austria,AT,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Azerbaijan,AZ,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Bahrain,BH,Asia,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Bahamas,BS,North America,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Bangladesh,BD,Asia,False,,APAC,,False,False,True,True,False,False,False,True,False,False,False,True
+Barbados,BB,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Belarus,BY,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Belgium,BE,Europe,False,,EMEA,EU,True,True,False,False,False,False,False,False,False,False,False,False
+Belize,BZ,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Benin,BJ,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Bermuda,BM,North America,True,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Bhutan,BT,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+"Bolivia, Plurinational State of",BO,South America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+"Bonaire, Sint Eustatius and Saba",BQ,South America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Bosnia and Herzegovina,BA,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Botswana,BW,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Bouvet Island,BV,,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Brazil,BR,South America,False,,AMER,,False,True,True,True,True,True,True,True,True,True,True,True
+British Indian Ocean Territory,IO,Asia,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Brunei Darussalam,BN,Asia,False,,APAC,ASEAN,False,False,False,True,True,True,True,False,True,True,True,True
+Bulgaria,BG,Europe,False,,EMEA,EU,False,True,True,False,False,False,False,False,False,False,False,False
+Burkina Faso,BF,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Burundi,BI,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Cambodia,KH,Asia,False,,APAC,ASEAN,False,False,False,False,False,False,False,False,False,False,False,False
+Cameroon,CM,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Canada,CA,North America,False,,AMER,,True,True,False,False,False,False,False,False,False,False,False,False
+Cape Verde,CV,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Cayman Islands,KY,North America,True,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Central African Republic,CF,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Chad,TD,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Chile,CL,South America,False,,AMER,,False,False,True,False,True,True,True,True,True,True,True,False
+China,CN,Asia,False,,APAC,,False,True,True,True,True,True,True,True,True,True,True,True
+Christmas Island,CX,Oceania,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Cocos (Keeling) Islands,CC,Oceania,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Colombia,CO,South America,False,,AMER,,False,False,True,False,True,True,True,True,True,True,True,True
+Comoros,KM,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Congo,CG,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+"Congo, the Democratic Republic of the",CD,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Cook Islands,CK,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Costa Rica,CR,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Côte d'Ivoire,CI,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Croatia,HR,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Cuba,CU,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Curaçao,CW,South America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Cyprus,CY,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Czech Republic,CZ,Europe,False,,EMEA,EU,False,True,False,True,True,True,True,True,True,True,True,True
+Denmark,DK,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Djibouti,DJ,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Dominica,DM,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Dominican Republic,DO,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Ecuador,EC,South America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Egypt,EG,Africa,False,,EMEA,,False,False,False,True,True,True,True,True,True,False,True,True
+El Salvador,SV,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Equatorial Guinea,GQ,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Eritrea,ER,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Estonia,EE,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Ethiopia,ET,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Falkland Islands (Malvinas),FK,,True,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Faroe Islands,FO,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Fiji,FJ,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Finland,FI,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+France,FR,Europe,False,,EMEA,EU,True,True,False,False,False,False,False,False,False,False,False,False
+French Guiana,GF,South America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+French Polynesia,PF,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+French Southern Territories,TF,,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Gabon,GA,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Gambia,GM,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Georgia,GE,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Germany,DE,Europe,False,,EMEA,EU,True,True,False,False,False,False,False,False,False,False,False,False
+Ghana,GH,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Gibraltar,GI,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Greece,GR,Europe,False,,EMEA,EU,False,True,False,False,True,True,True,False,True,True,False,False
+Greenland,GL,,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Grenada,GD,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Guadeloupe,GP,North America,True,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Guam,GU,Oceania,True,France,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Guatemala,GT,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Guernsey,GG,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Guinea,GN,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Guinea-Bissau,GW,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Guyana,GY,South America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Haiti,HT,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Heard Island and McDonald Islands,HM,,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Vatican City State,VA,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Honduras,HN,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Hong Kong,HK,Asia,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Hungary,HU,Europe,False,,EMEA,EU,False,True,True,False,True,True,True,True,True,True,True,False
+Iceland,IS,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+India,IN,Asia,False,,APAC,,False,True,True,True,True,True,True,True,True,True,True,True
+Indonesia,ID,Asia,False,,APAC,ASEAN,False,True,True,True,True,True,True,True,True,True,False,True
+"Iran, Islamic Republic of",IR,Asia,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Iraq,IQ,Asia,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Ireland,IE,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Isle of Man,IM,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Israel,IL,Asia,False,,EMEA,,False,False,False,False,False,False,False,True,False,False,True,False
+Italy,IT,Europe,False,,EMEA,EU,True,True,False,False,False,False,False,False,False,False,False,False
+Jamaica,JM,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Japan,JP,Asia,False,,APAC,,True,True,False,False,False,False,False,False,False,False,False,False
+Jersey,JE,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Jordan,JO,Asia,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Kazakhstan,KZ,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Kenya,KE,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Kiribati,KI,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+North Korea,KP,Asia,False,,,,False,False,False,True,True,True,True,False,True,True,True,True
+South Korea,KR,Asia,False,,EMEA,,False,True,False,True,True,True,True,False,True,True,True,True
+Kuwait,KW,Asia,False,,EMEA,,False,False,False,False,True,True,True,False,False,False,False,False
+Kyrgyzstan,KG,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Laos,LA,Asia,False,,APAC,ASEAN,False,False,False,False,False,False,False,False,False,False,False,False
+Latvia,LV,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Lebanon,LB,Asia,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Lesotho,LS,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Liberia,LR,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Libya,LY,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Liechtenstein,LI,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Lithuania,LT,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Luxembourg,LU,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Macao,MO,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+"Macedonia, the Former Yugoslav Republic of",MK,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Madagascar,MG,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Malawi,MW,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Malaysia,MY,Asia,False,,APAC,ASEAN,False,False,True,False,True,True,True,True,True,True,False,True
+Maldives,MV,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Mali,ML,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Malta,MT,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Marshall Islands,MH,Oceania,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Martinique,MQ,North America,True,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Mauritania,MR,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Mauritius,MU,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,True,False
+Mayotte,YT,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Mexico,MX,North America,False,,AMER,,False,True,True,True,True,True,True,True,True,True,True,True
+"Micronesia, Federated States of",FM,Oceania,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+"Moldova, Republic of",MD,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Monaco,MC,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Mongolia,MN,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Montenegro,ME,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Montserrat,MS,North America,True,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Morocco,MA,Africa,False,,EMEA,,False,False,True,True,True,True,True,True,True,True,True,False
+Mozambique,MZ,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Myanmar (Burma),MM,Asia,False,,APAC,ASEAN,False,False,False,True,True,True,True,False,True,True,True,True
+Namibia,,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Nauru,NR,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Nepal,NP,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Netherlands,NL,Europe,False,,EMEA,EU,True,True,False,False,False,False,False,False,False,False,False,False
+New Caledonia,NC,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+New Zealand,NZ,Oceania,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Nicaragua,NI,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Niger,NE,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Nigeria,NG,Africa,False,,EMEA,,False,False,False,True,False,False,False,True,False,False,False,True
+Niue,NU,Oceania,True,France,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Norfolk Island,NF,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Northern Mariana Islands,MP,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Norway,NO,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Oman,OM,Asia,False,,EMEA,,False,False,False,False,False,False,False,True,False,False,False,False
+Pakistan,PK,Asia,False,,APAC,,False,False,True,True,True,False,True,True,False,False,False,False
+Palau,PW,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+"Palestine, State of",PS,Asia,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Panama,PA,North America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Papua New Guinea,PG,Africa,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Paraguay,PY,South America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Peru,PE,South America,False,,AMER,,False,False,True,False,True,True,True,True,True,True,False,False
+Philippines,PH,Asia,False,,APAC,ASEAN,False,False,True,True,True,True,True,True,True,True,False,True
+Pitcairn,PN,South America,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Poland,PL,Europe,False,,EMEA,EU,False,True,True,False,False,True,True,True,True,False,True,True
+Portugal,PT,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Puerto Rico,PR,South America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Qatar,QA,Asia,False,,EMEA,,False,False,False,False,True,True,True,True,True,False,False,False
+Réunion,RE,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Romania,RO,Europe,False,,EMEA,EU,False,True,True,False,True,False,False,True,False,False,False,False
+Russia,RU,Europe,False,,EMEA,,False,True,True,True,True,True,True,True,True,True,True,True
+Rwanda,RW,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Saint Barthélemy,BL,South America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+"Saint Helena, Ascension and Tristan da Cunha",SH,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Saint Kitts and Nevis,KN,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Saint Lucia,LC,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Saint Martin (French part),MF,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Saint Pierre and Miquelon,PM,North America,True,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Saint Vincent and the Grenadines,VC,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Samoa,WS,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+San Marino,SM,Europe,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Sao Tome and Principe,ST,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Saudi Arabia,SA,Asia,False,,EMEA,,False,True,False,True,True,True,True,False,True,True,True,True
+Senegal,SN,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Serbia,RS,Europe,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Seychelles,SC,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Sierra Leone,SL,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Singapore,SG,Asia,False,,APAC,ASEAN,False,False,False,False,False,False,False,False,False,False,False,False
+Sint Maarten (Dutch part),SX,South Amercia,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Slovakia,SK,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Slovenia,SI,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Solomon Islands,SB,Oceania,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Somalia,SO,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+South Africa,ZA,Africa,False,,EMEA,,False,True,True,True,True,True,True,True,True,True,True,True
+South Georgia and the South Sandwich Islands,GS,South America,True,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+South Sudan,SS,Africa,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Spain,ES,Europe,False,,EMEA,EU,False,True,False,False,False,False,False,False,False,False,False,False
+Sri Lanka,LK,Asia,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Sudan,SD,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Suriname,SR,South America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Svalbard and Jan Mayen,SJ,,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Swaziland,SZ,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Sweden,SE,Europe,False,,EMEA,EU,True,True,False,False,False,False,False,False,False,False,False,False
+Switzerland,CH,Europe,False,,EMEA,,True,False,False,False,False,False,False,False,False,False,False,False
+Syrian Arab Republic,SY,Asia,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+"Taiwan, Province of China",TW,Asia,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Tajikistan,TJ,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+"Tanzania, United Republic of",TZ,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Thailand,TH,Asia,False,,APAC,ASEAN,False,False,True,False,True,True,True,True,True,True,True,True
+Timor-Leste,TL,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Togo,TG,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Tokelau,TK,Oceania,True,France,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Tonga,TO,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Trinidad and Tobago,TT,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Tunisia,TN,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Turkey,TR,Europe,False,,EMEA,,False,True,True,True,True,True,True,True,True,True,True,True
+Turkmenistan,TM,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Turks and Caicos Islands,TC,,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Tuvalu,TV,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Uganda,UG,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Ukraine,UA,Europe,False,,EMEA,,False,False,True,False,False,False,False,True,False,False,False,False
+United Arab Emirates,AE,Asia,False,,EMEA,,False,False,False,True,True,True,True,True,True,True,True,True
+United Kingdom,GB,Europe,False,,EMEA,,True,True,False,True,True,True,True,False,True,True,True,True
+United States of America,US,North America,False,,AMER,,True,True,False,True,True,True,True,False,True,True,True,True
+United States Minor Outlying Islands,UM,North America,False,,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Uruguay,UY,South America,False,,AMER,,False,False,False,False,False,False,False,False,False,False,False,False
+Uzbekistan,UZ,Asia,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+Vanuatu,VU,Oceania,False,,APAC,,False,False,False,False,False,False,False,False,False,False,False,False
+"Venezuela, Bolivarian Republic of",VE,South Amercia,False,,AMER,,False,False,True,True,True,True,True,True,True,True,True,True
+Vietnam,VN,Asia,False,,APAC,ASEAN,False,False,False,False,False,False,False,False,False,False,False,False
+"Virgin Islands, British",VG,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+"Virgin Islands, U.S.",VI,North America,False,,AMER,,False,False,False,True,True,True,True,False,True,True,True,True
+Wallis and Futuna,WF,Oceania,True,France,APAC,,False,False,False,True,True,True,True,False,True,True,True,True
+Western Sahara,EH,Africa,False,,EMEA,,False,False,False,True,True,True,True,False,True,True,True,True
+Yemen,YE,Asia,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Zambia,ZM,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
+Zimbabwe,ZW,Africa,False,,EMEA,,False,False,False,False,False,False,False,False,False,False,False,False
