@@ -5,6 +5,8 @@ from sqlalchemy import (
     Integer, String, Date, DateTime, Float, Boolean, Text)
 from scrapy.utils.project import get_project_settings
 # from sqlalchemy.pool import StaticPool
+from sqlalchemy.ext.mutable import MutableList
+from sqlalchemy import PickleType
 
 Base = declarative_base()
 
@@ -104,8 +106,8 @@ class Security(Base):
     exchanges = relationship('Exchange', secondary='exchanges_association',
                         lazy='dynamic', backref="security", overlaps="security,exchanges")  # M-to-M for security and tag
     # 1-to-1 for security and signal
-    signal = relationship(
-        'Signal', back_populates='security', uselist=False)
+    # signal = relationship(
+    #     'Signal', back_populates='security', uselist=False)
     # def __repr__(self):
     #     return "<{0} Id: {1} - Ticker: {2}, Name: {3}, Industry: {4} Beta: {5} Analyst Rec: {6} Mkt. Cap: {7}>".format(self.__class__name, self.id,
     #             self.ticker, self.name, self.industry, self.beta, self.average_rec, self.market_cap)
@@ -115,7 +117,7 @@ class AssetClass(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(150), unique=True)
-    securities = relationship('security', backref='asset_class', lazy='dynamic')
+    securities = relationship('Security', backref='asset_class', lazy='dynamic')
 
     def __repr__(self):
         # return "<{0} Id: {1} - Name: {2}>".format(self.__class__name, self.id,
@@ -128,9 +130,16 @@ class Country(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(30), unique=True)  # , nullable=False)
-    continent = Column('continent', String(30), default=None)
-    region = Column('region', String(30), default=None)
+    ISO_3166 = Column('ISO_3166', String(10), unique=True)  # , nullable=False)
+    continent = Column('continent', String(20), default=None)
+    region = Column('region', String(10), default=None)
     geo_market = Column('geo_market', String(30), default=None)
+    econ_group = Column('econ_group', String(30), default=None)
+    geopol_group = Column('geopol_group', Text(), default=None)
+    geopol_group = Column('geopol_group', MutableList.as_mutable(PickleType),
+                                        default=[])
+    territory = Column('territory', Boolean, default=False)
+    territory_of = Column('territory_of', String(160), default=False)
     cb_on_rate = Column('cb_on_rate', Float, default=None)
     last_rate_change = Column('last_rate_change', DateTime, default=None)
     last_m_infl = Column('last_m_infl', Float, default=None)
@@ -159,7 +168,7 @@ class Currency(Base):
     # countries = relationship('Country', backref='currency', lazy='dynamic')
     countries = relationship('Country', secondary='currencies_association',
                           lazy='dynamic', backref="currency", overlaps="currency,countries")
-    exchanges = relationship('exchange', backref='currency', lazy='dynamic')
+    exchanges = relationship('Exchange', backref='currency', lazy='dynamic')
 
     def __repr__(self):
         # return "<{0} Id: {1} - Name: {2}, Ticker: {3}, Minor Unit {4}, Fund {5}>".format(self.__class__name, self.id,
@@ -172,8 +181,12 @@ class Industry(Base):
     __tablename__ = "industry"
 
     id = Column(Integer, primary_key=True)
+    NAICS_code = Column('NAICS_code', Integer, default=None)
     name = Column('name', String(50), unique=True, default=None)
     sector = Column('sector', Text(), default=None)
+    NAICS_sector_code = Column('NAICS_sector_code', Integer, default=None)
+    NAICS_desc_code = Column('NAICS_desc_code', Integer, default=None)
+    Description = Column('Description', Text(), default=None)
     beta = Column('beta', Float, default=None)
     market_cap = Column('market_cap', Float, default=None)
     pe_ratio = Column('pe_ratio', Float, default=None)
@@ -188,7 +201,7 @@ class Industry(Base):
     current_ratio = Column('current_ratio', Float, default=None)
     quick_ratio = Column('quick_ratio', Float, default=None)
     cash_ratio = Column('cash_ratio', Float, default=None)
-    securities = relationship('security', secondary='industries_association',
+    securities = relationship('Security', secondary='industries_association',
                             lazy='dynamic', backref="industry", overlaps="security,industries")  # M-to-M for security and authors
     # def __repr__(self):
     #     return "<{0} Id: {1} - Name: {2} Sector: {3} Beta: {4} Mkt. Cap: {5}>".format(self.__class__name, self.id,
@@ -202,7 +215,7 @@ class Exchange(Base):
     name = Column('name', String(30), unique=True)  # , nullable=False)
     country_id = Column(Integer, ForeignKey('country.id'))
     timezone = Column(String(150), unique=True, default=None)
-    securities = relationship('security', secondary='exchanges_association',
+    securities = relationship('Security', secondary='exchanges_association',
                             lazy='dynamic', backref="exchange", overlaps="security,exchanges")  # M-to-M for security and topic
     # def __repr__(self):
     #     return "<{0} Id: {1} - Name: {2} country_id: {3}>".format(self.__class__name, self.id,
@@ -213,7 +226,7 @@ class Tag(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column('name', String(30), unique=True, default=None)
-    securities = relationship('security', secondary='tags_association',
+    securities = relationship('Security', secondary='tags_association',
                             lazy='dynamic', backref="tag")  # , overlaps="security,tags")  # M-to-M for security and tag
     # def __repr__(self):
     #     return "<{0} Id: {1} - Name: {2}>".format(self.__class__name, self.id,

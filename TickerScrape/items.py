@@ -23,7 +23,11 @@ def strip_stock_country(text):
     return text.replace('Location: ', '')
 
 def to_float(float_str):
-    return float(float_str)
+    try:
+        fl = float(float_str)
+    except:
+        fl = float("NaN")
+    return fl
 
 def curr_str_to_float(cur_str, symbol='$'):
     '''Convert a currency string-formatted number into a float.'''
@@ -32,20 +36,20 @@ def curr_str_to_float(cur_str, symbol='$'):
     for x in num_strs:
         if x in cur_str.lower():
             str_num_1 = cur_str.lower().replace(x, '').replace(',','').replace(symbol,'')
-    # str_num_1 = [cur_str.replace(x, '') for x in num_strs if x in cur_str.lower()]
-    print(str_num_1)
-    if str_num_1 == cur_str:
-        str_num_1 = cur_str.replace('M', '').replace('B', '').replace('T', '').replace(',','').replace(symbol,'')
-    print (str_num_1)
-    if 'm' in cur_str.lower():
-        fl_num = float(str_num_1) * 1000000
-    elif 'b' in cur_str.lower():
-        fl_num = float(str_num_1) * 1000000000
-    elif 'thousand' in cur_str.lower():
-        fl_num = float(str_num_1) * 1000
-    elif ('T' in cur_str) or ('trillion' in cur_str.lower()):
-        fl_num = float(str_num_1) * 1000000000000
-    # print ("${0:,.2f}".format(fl_num))
+            # str_num_1 = [cur_str.replace(x, '') for x in num_strs if x in cur_str.lower()]
+            if str_num_1 == cur_str:
+                str_num_1 = cur_str.replace('M', '').replace('B', '').replace('T', '').replace(',','').replace(symbol,'')
+            if 'm' in cur_str.lower():
+                fl_num = float(str_num_1) * 1000000
+            elif 'b' in cur_str.lower():
+                fl_num = float(str_num_1) * 1000000000
+            elif 'thousand' in cur_str.lower():
+                fl_num = float(str_num_1) * 1000
+            elif ('T' in cur_str) or ('trillion' in cur_str.lower()):
+                fl_num = float(str_num_1) * 1000000000000
+            # print ("${0:,.2f}".format(fl_num))
+        else:
+            fl_num = float("NaN")
     return fl_num
 
 def float_to_curr_str(cur_float, symbol='$', decimals=0):
@@ -58,6 +62,12 @@ def perc_str_to_float(perc_str):
     '''Convert a percentage string-formatted number into a float.'''
     fl_num = float(perc_str.lower().replace(',','').replace('%',''))
     return fl_num / 100
+
+def strp_brackets(text):
+    """
+    Strip brackets surrounding a string.
+    """
+    return text.strip().strip('(').strip(')')
 
 def strp_dt(text):
     """
@@ -236,9 +246,15 @@ class TestItem(Item):
 
 class MwSecurityItem(Item):
     sec_name = Field(
+        input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
         )
     ticker = Field(
+        input_processor=MapCompose(strp_brackets),
+        output_processor=TakeFirst()
+        )
+    exchange = Field(
+        input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
         )
     asset_class = Field(
@@ -288,31 +304,31 @@ class MwSecurityItem(Item):
         output_processor=TakeFirst()
         )
     roi = Field(
-        input_processor=Compose(perc_str_to_float),
+        input_processor=MapCompose(perc_str_to_float),
         output_processor=TakeFirst()
         )
     debt_to_eq = Field(
-        input_processor=Compose(to_float),
+        input_processor=MapCompose(to_float),
         output_processor=TakeFirst()
         )
     debt_to_ass = Field(
-        input_processor=Compose(to_float),
+        input_processor=MapCompose(to_float),
         output_processor=TakeFirst()
         )
     current_ratio = Field(
-        input_processor=Compose(to_float),
+        input_processor=MapCompose(to_float),
         output_processor=TakeFirst()
         )
     quick_ratio = Field(
-        input_processor=Compose(to_float),
+        input_processor=MapCompose(to_float),
         output_processor=TakeFirst()
         )
     cash_ratio = Field(
-        input_processor=Compose(to_float),
+        input_processor=MapCompose(to_float),
         output_processor=TakeFirst()
         )
     sec_summary = Field(
-        input_processor=Compose(remove_space, str.strip),
+        input_processor=MapCompose(remove_space, str.strip),
         output_processor=TakeFirst()
         )
     tags = Field()

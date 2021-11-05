@@ -1,0 +1,250 @@
+Country,ISO_3166,Continent,Territory,Territory_of,Region,Econ_Group,Geopol_group
+Afghanistan,AF,Asia,False,,EMEA,,
+Åland Islands,AX,Europe,False,,EMEA,,
+Albania,AL,Europe,False,,EMEA,,
+Algeria,DZ,Africa,False,,EMEA,,
+American Samoa,AS,Oceania,True,France,APAC,,
+Andorra,AD,Europe,False,,EMEA,,
+Angola,AO,Africa,False,,EMEA,,
+Anguilla,AI,North America,True,,AMER,,
+Antarctica,AQ,,False,,APAC,,
+Antigua and Barbuda,AG,North America,False,,AMER,,
+Argentina,AR,South America,False,,AMER,,"IMF EM,EM Bond Index,Columbia University EMGP,Cornell University EMI E20,G20"
+Armenia,AM,Europe,False,,EMEA,,
+Aruba,AW,North America,True,,AMER,,
+Australia,AU,Oceania,False,,APAC,,G20
+Austria,AT,Europe,False,,EMEA,EU,G20
+Azerbaijan,AZ,Europe,False,,EMEA,,
+Bahrain,BH,Asia,False,,AMER,,
+Bahamas,BS,North America,False,,EMEA,,
+Bangladesh,BD,Asia,False,,APAC,,"IMF EM,BRICS & Next Eleven,EM Bond Index,Cornell University EMI E20"
+Barbados,BB,North America,False,,AMER,,
+Belarus,BY,Europe,False,,EMEA,,
+Belgium,BE,Europe,False,,EMEA,EU,"G10,G20"
+Belize,BZ,North America,False,,AMER,,
+Benin,BJ,Africa,False,,EMEA,,
+Bermuda,BM,North America,True,,AMER,,
+Bhutan,BT,Asia,False,,APAC,,
+"Bolivia, Plurinational State of",BO,South America,False,,AMER,,
+"Bonaire, Sint Eustatius and Saba",BQ,South America,False,,AMER,,
+Bosnia and Herzegovina,BA,Europe,False,,EMEA,,
+Botswana,BW,Africa,False,,EMEA,,
+Bouvet Island,BV,,False,,EMEA,,
+Brazil,BR,South America,False,,AMER,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+British Indian Ocean Territory,IO,Asia,False,,APAC,,
+Brunei Darussalam,BN,Asia,False,,APAC,ASEAN,
+Bulgaria,BG,Europe,False,,EMEA,EU,"IMF EM,G20"
+Burkina Faso,BF,Africa,False,,EMEA,,
+Burundi,BI,Africa,False,,EMEA,,
+Cambodia,KH,Asia,False,,APAC,ASEAN,
+Cameroon,CM,Africa,False,,EMEA,,
+Canada,CA,North America,False,,AMER,,"G10,G20"
+Cape Verde,CV,Africa,False,,EMEA,,
+Cayman Islands,KY,North America,True,,AMER,,
+Central African Republic,CF,Africa,False,,EMEA,,
+Chad,TD,Africa,False,,EMEA,,
+Chile,CL,South America,False,,AMER,,"IMF EM,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP"
+China,CN,Asia,False,,APAC,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+Christmas Island,CX,Oceania,False,,APAC,,
+Cocos (Keeling) Islands,CC,Oceania,False,,APAC,,
+Colombia,CO,South America,False,,AMER,,"IMF EM,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20"
+Comoros,KM,Africa,False,,EMEA,,
+Congo,CG,Africa,False,,EMEA,,
+"Congo, the Democratic Republic of the",CD,Africa,False,,EMEA,,
+Cook Islands,CK,Oceania,True,France,APAC,,
+Costa Rica,CR,North America,False,,AMER,,
+Côte d'Ivoire,CI,Africa,False,,EMEA,,
+Croatia,HR,Europe,False,,EMEA,EU,G20
+Cuba,CU,North America,False,,AMER,,
+Curaçao,CW,South America,False,,AMER,,
+Cyprus,CY,Europe,False,,EMEA,EU,G20
+Czech Republic,CZ,Europe,False,,EMEA,EU,"FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,G20"
+Denmark,DK,Europe,False,,EMEA,EU,G20
+Djibouti,DJ,Africa,False,,EMEA,,
+Dominica,DM,North America,False,,AMER,,
+Dominican Republic,DO,North America,False,,AMER,,
+Ecuador,EC,South America,False,,AMER,,
+Egypt,EG,Africa,False,,EMEA,,"BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Columbia University EMGP,Cornell University EMI E20"
+El Salvador,SV,North America,False,,AMER,,
+Equatorial Guinea,GQ,Africa,False,,EMEA,,
+Eritrea,ER,Africa,False,,EMEA,,
+Estonia,EE,Europe,False,,EMEA,EU,G20
+Ethiopia,ET,Africa,False,,EMEA,,
+Falkland Islands (Malvinas),FK,,True,,EMEA,,
+Faroe Islands,FO,Europe,False,,EMEA,,
+Fiji,FJ,Oceania,False,,APAC,,
+Finland,FI,Europe,False,,EMEA,EU,G20
+France,FR,Europe,False,,EMEA,EU,"G10,G20"
+French Guiana,GF,South America,False,,AMER,,
+French Polynesia,PF,Oceania,True,France,APAC,,
+French Southern Territories,TF,,False,,APAC,,
+Gabon,GA,Africa,False,,EMEA,,
+Gambia,GM,Africa,False,,EMEA,,
+Georgia,GE,Europe,False,,EMEA,,
+Germany,DE,Europe,False,,EMEA,EU,"G10,G20"
+Ghana,GH,Africa,False,,EMEA,,
+Gibraltar,GI,Europe,False,,EMEA,,
+Greece,GR,Europe,False,,EMEA,EU,"FTSE EM,MSCI EM,S&P EM,Dow Jones EM,Russell EM,G20"
+Greenland,GL,,False,,EMEA,,
+Grenada,GD,North America,False,,AMER,,
+Guadeloupe,GP,North America,True,,AMER,,
+Guam,GU,Oceania,True,France,APAC,,
+Guatemala,GT,North America,False,,AMER,,
+Guernsey,GG,Europe,False,,EMEA,,
+Guinea,GN,Africa,False,,EMEA,,
+Guinea-Bissau,GW,Africa,False,,EMEA,,
+Guyana,GY,South America,False,,AMER,,
+Haiti,HT,North America,False,,AMER,,
+Heard Island and McDonald Islands,HM,,False,,APAC,,
+Vatican City State,VA,Europe,False,,EMEA,,
+Honduras,HN,North America,False,,AMER,,
+Hong Kong,HK,Asia,False,,APAC,,
+Hungary,HU,Europe,False,,EMEA,EU,"IMF EM,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,G20"
+Iceland,IS,Europe,False,,EMEA,,
+India,IN,Asia,False,,APAC,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+Indonesia,ID,Asia,False,,APAC,ASEAN,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Cornell University EMI E20,G20"
+"Iran, Islamic Republic of",IR,Asia,False,,EMEA,,"BRICS & Next Eleven,Cornell University EMI E20"
+Iraq,IQ,Asia,False,,EMEA,,
+Ireland,IE,Europe,False,,EMEA,EU,G20
+Isle of Man,IM,Europe,False,,EMEA,,
+Israel,IL,Asia,False,,EMEA,,"EM Bond Index,Columbia University EMGP"
+Italy,IT,Europe,False,,EMEA,EU,"G10,G20"
+Jamaica,JM,North America,False,,AMER,,
+Japan,JP,Asia,False,,APAC,,"G10,G20"
+Jersey,JE,Europe,False,,EMEA,,
+Jordan,JO,Asia,False,,EMEA,,
+Kazakhstan,KZ,Europe,False,,EMEA,,
+Kenya,KE,Africa,False,,EMEA,,
+Kiribati,KI,Oceania,False,,APAC,,
+North Korea,KP,Asia,False,,,,
+South Korea,KR,Asia,False,,EMEA,,"BRICS & Next Eleven,MSCI EM,Columbia University EMGP,Cornell University EMI E20,G20"
+Kuwait,KW,Asia,False,,EMEA,,"FTSE EM,MSCI EM,S&P EM"
+Kyrgyzstan,KG,Asia,False,,APAC,,
+Laos,LA,Asia,False,,APAC,ASEAN,
+Latvia,LV,Europe,False,,EMEA,EU,G20
+Lebanon,LB,Asia,False,,EMEA,,
+Lesotho,LS,Africa,False,,EMEA,,
+Liberia,LR,Africa,False,,EMEA,,
+Libya,LY,Africa,False,,EMEA,,
+Liechtenstein,LI,Europe,False,,EMEA,,
+Lithuania,LT,Europe,False,,EMEA,EU,G20
+Luxembourg,LU,Europe,False,,EMEA,EU,G20
+Macao,MO,Asia,False,,APAC,,
+"Macedonia, the Former Yugoslav Republic of",MK,Europe,False,,EMEA,,
+Madagascar,MG,Africa,False,,EMEA,,
+Malawi,MW,Africa,False,,EMEA,,
+Malaysia,MY,Asia,False,,APAC,ASEAN,"IMF EM,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Cornell University EMI E20"
+Maldives,MV,Asia,False,,APAC,,
+Mali,ML,Africa,False,,EMEA,,
+Malta,MT,Europe,False,,EMEA,EU,G20
+Marshall Islands,MH,Oceania,False,,APAC,,
+Martinique,MQ,North America,True,,AMER,,
+Mauritania,MR,Africa,False,,EMEA,,
+Mauritius,MU,Africa,False,,EMEA,,Columbia University EMGP
+Mayotte,YT,Africa,False,,EMEA,,
+Mexico,MX,North America,False,,AMER,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+"Micronesia, Federated States of",FM,Oceania,False,,APAC,,
+"Moldova, Republic of",MD,Europe,False,,EMEA,,
+Monaco,MC,Europe,False,,EMEA,,
+Mongolia,MN,Asia,False,,APAC,,
+Montenegro,ME,Europe,False,,EMEA,,
+Montserrat,MS,North America,True,,AMER,,
+Morocco,MA,Africa,False,,EMEA,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP"
+Mozambique,MZ,Africa,False,,EMEA,,
+Myanmar (Burma),MM,Asia,False,,APAC,ASEAN,
+Namibia,,Africa,False,,EMEA,,
+Nauru,NR,Oceania,False,,APAC,,
+Nepal,NP,Asia,False,,APAC,,
+Netherlands,NL,Europe,False,,EMEA,EU,"G10,G20"
+New Caledonia,NC,Oceania,True,France,APAC,,
+New Zealand,NZ,Oceania,False,,APAC,,
+Nicaragua,NI,North America,False,,AMER,,
+Niger,NE,Africa,False,,EMEA,,
+Nigeria,NG,Africa,False,,EMEA,,"BRICS & Next Eleven,EM Bond Index,Cornell University EMI E20"
+Niue,NU,Oceania,True,France,APAC,,
+Norfolk Island,NF,Oceania,True,France,APAC,,
+Northern Mariana Islands,MP,Oceania,True,France,APAC,,
+Norway,NO,Europe,False,,EMEA,,
+Oman,OM,Asia,False,,EMEA,,EM Bond Index
+Pakistan,PK,Asia,False,,APAC,,"IMF EM,BRICS & Next Eleven,FTSE EM,S&P EM,EM Bond Index"
+Palau,PW,Oceania,False,,APAC,,
+"Palestine, State of",PS,Asia,False,,EMEA,,
+Panama,PA,North America,False,,AMER,,
+Papua New Guinea,PG,Africa,False,,APAC,,
+Paraguay,PY,South America,False,,AMER,,
+Peru,PE,South America,False,,AMER,,"IMF EM,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM"
+Philippines,PH,Asia,False,,APAC,ASEAN,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Cornell University EMI E20"
+Pitcairn,PN,South America,False,,APAC,,
+Poland,PL,Europe,False,,EMEA,EU,"IMF EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Columbia University EMGP,Cornell University EMI E20,G20"
+Portugal,PT,Europe,False,,EMEA,EU,G20
+Puerto Rico,PR,South America,False,,AMER,,
+Qatar,QA,Asia,False,,EMEA,,"FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM"
+Réunion,RE,Africa,False,,EMEA,,
+Romania,RO,Europe,False,,EMEA,EU,"IMF EM,FTSE EM,EM Bond Index,G20"
+Russia,RU,Europe,False,,EMEA,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+Rwanda,RW,Africa,False,,EMEA,,
+Saint Barthélemy,BL,South America,False,,AMER,,
+"Saint Helena, Ascension and Tristan da Cunha",SH,Africa,False,,EMEA,,
+Saint Kitts and Nevis,KN,North America,False,,AMER,,
+Saint Lucia,LC,North America,False,,AMER,,
+Saint Martin (French part),MF,North America,False,,AMER,,
+Saint Pierre and Miquelon,PM,North America,True,,AMER,,
+Saint Vincent and the Grenadines,VC,North America,False,,AMER,,
+Samoa,WS,Oceania,False,,APAC,,
+San Marino,SM,Europe,False,,EMEA,,
+Sao Tome and Principe,ST,Africa,False,,EMEA,,
+Saudi Arabia,SA,Asia,False,,EMEA,,"FTSE EM,MSCI EM,Cornell University EMI E20,G20"
+Senegal,SN,Africa,False,,EMEA,,
+Serbia,RS,Europe,False,,EMEA,,
+Seychelles,SC,Africa,False,,EMEA,,
+Sierra Leone,SL,Africa,False,,EMEA,,
+Singapore,SG,Asia,False,,APAC,ASEAN,
+Sint Maarten (Dutch part),SX,South Amercia,False,,AMER,,
+Slovakia,SK,Europe,False,,EMEA,EU,G20
+Slovenia,SI,Europe,False,,EMEA,EU,G20
+Solomon Islands,SB,Oceania,False,,APAC,,
+Somalia,SO,Africa,False,,EMEA,,
+South Africa,ZA,Africa,False,,EMEA,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+South Georgia and the South Sandwich Islands,GS,South America,True,,EMEA,,
+South Sudan,SS,Africa,False,,APAC,,
+Spain,ES,Europe,False,,EMEA,EU,G20
+Sri Lanka,LK,Asia,False,,APAC,,
+Sudan,SD,Africa,False,,EMEA,,
+Suriname,SR,South America,False,,AMER,,
+Svalbard and Jan Mayen,SJ,,False,,EMEA,,
+Swaziland,SZ,Africa,False,,EMEA,,
+Sweden,SE,Europe,False,,EMEA,EU,"G10,G20"
+Switzerland,CH,Europe,False,,EMEA,,G10
+Syrian Arab Republic,SY,Asia,False,,EMEA,,
+"Taiwan, Province of China",TW,Asia,False,,APAC,,"FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP"
+Tajikistan,TJ,Asia,False,,APAC,,
+"Tanzania, United Republic of",TZ,Africa,False,,EMEA,,
+Thailand,TH,Asia,False,,APAC,ASEAN,"IMF EM,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20"
+Timor-Leste,TL,Asia,False,,APAC,,
+Togo,TG,Africa,False,,EMEA,,
+Tokelau,TK,Oceania,True,France,APAC,,
+Tonga,TO,Oceania,False,,APAC,,
+Trinidad and Tobago,TT,North America,False,,AMER,,
+Tunisia,TN,Africa,False,,EMEA,,
+Turkey,TR,Europe,False,,EMEA,,"IMF EM,BRICS & Next Eleven,FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP,Cornell University EMI E20,G20"
+Turkmenistan,TM,Asia,False,,APAC,,
+Turks and Caicos Islands,TC,,False,,AMER,,
+Tuvalu,TV,Oceania,False,,APAC,,
+Uganda,UG,Africa,False,,EMEA,,
+Ukraine,UA,Europe,False,,EMEA,,"IMF EM,EM Bond Index"
+United Arab Emirates,AE,Asia,False,,EMEA,,"FTSE EM,MSCI EM,S&P EM,EM Bond Index,Dow Jones EM,Russell EM,Columbia University EMGP"
+United Kingdom,GB,Europe,False,,EMEA,,"G10,G20"
+United States of America,US,North America,False,,AMER,,"G10,G20"
+United States Minor Outlying Islands,UM,North America,False,,APAC,,
+Uruguay,UY,South America,False,,AMER,,
+Uzbekistan,UZ,Asia,False,,APAC,,
+Vanuatu,VU,Oceania,False,,APAC,,
+"Venezuela, Bolivarian Republic of",VE,South Amercia,False,,AMER,,"IMF EM,EM Bond Index"
+Vietnam,VN,Asia,False,,APAC,ASEAN,
+"Virgin Islands, British",VG,North America,False,,AMER,,
+"Virgin Islands, U.S.",VI,North America,False,,AMER,,
+Wallis and Futuna,WF,Oceania,True,France,APAC,,
+Western Sahara,EH,Africa,False,,EMEA,,
+Yemen,YE,Asia,False,,EMEA,,
+Zambia,ZM,Africa,False,,EMEA,,
+Zimbabwe,ZW,Africa,False,,EMEA,,

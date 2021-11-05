@@ -9,10 +9,11 @@
 
 from sqlalchemy.orm import sessionmaker
 from scrapy.exceptions import DropItem
-from TickerScrape.models import db_connect, create_table, Security, AssetClass, Country, Currency, Industry, Tag #  create_output_table
-from TickerScrape.items import clean_text, extract_standfirst, TestItem
+from TickerScrape.models import db_connect, create_table, Security, AssetClass, Country, Currency, Industry, Exchange, Tag #  create_output_table
+from TickerScrape.items import TestItem
 import logging
 import pandas as pd
+from fuzzywuzzy import process, fuzz
 
 class SaveSecuritiesPipeline(object):
     def __init__(self, stats):
@@ -45,8 +46,6 @@ class SaveSecuritiesPipeline(object):
         """
         session = self.Session()
         security = Security()
-        currency = Currency()
-        industry = Industry()
         tag = Tag()
         security.name = item["sec_name"]
         security.ticker = item["ticker"]
@@ -104,87 +103,77 @@ class SaveSecuritiesPipeline(object):
         if exist_country is not None:  # the current author exists
             security.country = exist_country
         else:
+            countries_df = pd.read_csv('csv_files/country_dataset.csv')
+
+            country_row = pd.Series(dtype='object')
+            country_str = country.replace('.', '')
+            if len(country_str) < 5:
+                country_row = countries_df.loc[countries_df['ISO_3166'].astype(str) == (country_str)]
+            if len(country_row) == 0:
+                country_row = countries_df.loc[countries_df['Country'].str.contains(country)]
+            if len(country_row) > 1:
+                highest = process.extractOne(country,country_row['Country'])
+                country_row = country_row.loc[country_row['Country'].str.contains(highest[0])]
+            if len(country_row) == 0:
+                # highest = process.extractOne(country,countries_df['Country']) # scorer=fuzz.token_set_ratio
+                highest = process.extractOne(country,countries_df['Country'], scorer=fuzz.token_set_ratio)
+                print("WARNING : Using fuzzy logic to predict country:", highest[0])
+                country_row = countries_df.loc[countries_df['Country'].str.contains(highest[0])]
+
+            country.continent = country_row['Continent'].values[0]
+            country.ISO_3166 = country_row['ISO_3166'].values[0]
+            country.continent = country_row['Continent'].values[0]
+            country.territory = country_row['Territory'].values[0]
+            country.territory_of = country_row['Territory_of'].values[0]
+            country.region = country_row['Region'].values[0]
+            country.econ_group = country_row['Econ_Group'].values[0]
+            # country.geopol_group = country_row['Geopol_group'].values[0]
+            country.geopol_group = country.geopol_group + country_row['Geopol_group'].values[0]
+
             security.country = country
 
         #Add currency for new countries
         if exist_country is None:
-            try:
-                fx_codes = pd.read_csv('csv_files/ISO_4217_FX_Codes.csv')
-                entity = fx_codes.loc[fx_codes['Entity'].str.contains(country, regex=False)]
-                if entity:
-                    for index, row in entity.iterrows():
-                        match_currency = entity['Currency'][index]
-                        exist_currency = session.query(Currency).filter_by(name=match_currency).first()
-                        if exist_currency is None:
-                            currency = Currency(name=match_currency)
-                            match_ticker = entity['Ticker'][index]
-                            if match_ticker:
-                                currency.ticker = match_ticker
-                            ISO_4217 = entity['ISO_4217'][index]
-                            if ISO_4217:
-                                currency.ISO_4217 = ISO_4217
-                            minor_unit = entity['Minor unit'][index]
-                            if minor_unit:
-                                currency.minor_unit = match_ticker
-                            fund = entity['Fund'][index]
-                            print (fund)
-                            description = entity['Description'][index]
-                            if description:
-                                currency.description = description
-                        else:
-                            currency = exist_currency
-                        security.currency.append(currency)
+            fx_codes = pd.read_csv('csv_files/ISO_4217_FX_Codes.csv')
+            entity = fx_codes.loc[fx_codes['Entity'].str.contains(country, regex=False)]
+            if entity:
+                for index, row in entity.iterrows():
+                    match_currency = entity['Currency'][index]
+                    exist_currency = session.query(Currency).filter_by(name=match_currency).first()
+                    if exist_currency is None:
+                        currency = Currency(name=match_currency)
+                        match_ticker = entity['Ticker'][index]
+                        if match_ticker:
+                            currency.ticker = match_ticker
+                        ISO_4217 = entity['ISO_4217'][index]
+                        if ISO_4217:
+                            currency.ISO_4217 = ISO_4217
+                        minor_unit = entity['Minor unit'][index]
+                        if minor_unit:
+                            currency.minor_unit = match_ticker
+                        fund = entity['Fund'][index]
+                        print (fund)
+                        description = entity['Description'][index]
+                        if description:
+                            currency.description = description
+                    else:
+                        currency = exist_currency
+                    security.currency.append(currency)
                 
-                for author_name, auth in item["authors"].items():
-                    author = Author(name=author_name)
-                    # author.name = auth['author_name']
-                    if 'author_position' in auth:
-                        author.position = auth['author_position']
-                    if "author_bio" in auth:
-                        author.bio = auth["author_bio"]
-                    if "bio_link" in auth:
-                        author.bio_link = auth["bio_link"]
-                    if "author_twitter" in auth:
-                        author.twitter = auth["author_twitter"]
-                    if "author_fb" in auth:
-                        author.facebook = auth["author_fb"]
-                    if "author_email" in auth:
-                        author.email = auth["author_email"]
-                    if "author_bias" in auth:
-                        author.bias = auth["author_bias"]
-                    if "author_birthday" in auth:
-                        author.birthday = auth["author_birthday"]
-                    if "author_bornlocation" in auth:
-                        author.bornlocation = auth["author_bornlocation"]
-            except:
-                for a in item["authors"]:
-                    for author_name, auth in a.items():
-                        author = Author(name=author_name)
-                    if 'author_position' in auth:
-                        author.position = auth['author_position']
-                    if "author_bio" in auth:
-                        author.bio = auth["author_bio"]
-                    if "bio_link" in auth:
-                        author.bio_link = auth["bio_link"]
-                    if "author_twitter" in auth:
-                        author.twitter = auth["author_twitter"]
-                    if "author_linkedin" in auth:
-                        author.linkedin = auth["author_linkedin"]
-                    if "author_fb" in auth:
-                        author.facebook = auth["author_fb"]
-                    if "author_email" in auth:
-                        author.email = auth["author_email"]
-                    if "author_bias" in auth:
-                        author.bias = auth["author_bias"]
-                    if "author_birthday" in auth:
-                        author.birthday = auth["author_birthday"]
-                    if "author_bornlocation" in auth:
-                        author.bornlocation = auth["author_bornlocation"]
-            # check whether the author exists
-            exist_author = session.query(Author).filter_by(name=author.name).first()
-            if exist_author is not None:  # the current author exists
-                author = exist_author
-            security.authors.append(author)
+        if "industry" in item:
+            industry = Industry(name=item['industry'])
+            exist_industry = session.query(Industry).filter_by(name=industry.name).first()
+            if exist_industry is not None:  # the current industry exists
+                industry = exist_industry
+            security.industries.append(industry)
+
+        if "exchange" in item:
+            exchange = Exchange(name=item['exchange'])
+            exist_exchange = session.query(Exchange).filter_by(name=exchange.name).first()
+            if exist_exchange is not None:  # the current exchange exists
+                exchange = exist_exchange
+            security.exchanges.append(exchange)
+
 
         # check whether the current Security has tags or not
         if "tags" in item:
@@ -194,8 +183,20 @@ class SaveSecuritiesPipeline(object):
                 exist_tag = session.query(Tag).filter_by(name=tag.name).first()
                 if exist_tag is not None:  # the current tag exists
                     tag = exist_tag
-                Security.tags.append(tag)
+                security.tags.append(tag)
 
+        try:
+            session.add(security)
+            session.commit()
+
+        except:
+            session.rollback()
+            raise
+
+        finally:
+            session.close()
+
+        return item
 
 class DuplicatesPipeline(object):
 
@@ -220,6 +221,6 @@ class DuplicatesPipeline(object):
         exist_security = session.query(Security).filter_by(ticker=item["ticker"]).first()
         session.close()
         if exist_security is not None:  # the current Security exists
-            raise DropItem("Duplicate item found: %s" % item["headline"])
+            raise DropItem("Duplicate item found: %s" % item["ticker"])
         else:
             return item
