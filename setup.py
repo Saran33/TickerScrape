@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='TickerScrape',
     packages=find_packages(include=['tutorial']),
-    version='0.1',
+    version='0.16',
 	author='Saran Connolly',
     description='Scrape the universe of exchange-traded security tickers.',
 	long_description=long_description,

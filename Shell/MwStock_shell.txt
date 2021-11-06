@@ -1,5 +1,5 @@
 scrapy shell --nolog
-url = 'https://www.marketwatch.com/tools/markets/stocks'
+url = 'https://www.marketwatch.com/tools/markets/currencies/'
 fetch(url)
 
 asset_class = response.xpath('//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get()
@@ -34,6 +34,7 @@ if response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li[@class="ac
     print (next_page)
 
 sec_url = 'https://www.marketwatch.com/investing/stock/aapl'
+sec_url = 'https://www.marketwatch.com/investing/stock/acad'
 fetch(sec_url)
 
 beta = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[7]/span[1]/text()').get()
@@ -45,6 +46,8 @@ price_to_sales = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div
 import time
 %timeit profile_url = response.xpath('//*[@class="list list--subnav horizontal"]/li[4]/a/@href').get()
 %timeit profile_url = response.xpath('//a[@instrument-target="financials"]/@href').get()
+
+analyst_url = response.xpath('//a[@instrument-target="analystestimates"]/@href').get()
 
 profile_url = 'https://www.marketwatch.com/investing/stock/aapl/company-profile?mod=mw_quote_tab'
 fetch(profile_url)
@@ -62,3 +65,6 @@ quick_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/
 cash_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[3]/td[2]/text()').get()
 
 sec_summary = response.xpath('//p[@class="description__text"]/text()').get()
+
+analyst_url = 'https://www.marketwatch.com/investing/stock/aapl/company-analyst?mod=mw_quote_tab'
+fetch(analyst_url)

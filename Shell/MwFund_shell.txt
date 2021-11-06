@@ -1,0 +1,60 @@
+
+scrapy shell --nolog
+url = 'https://www.marketwatch.com/tools/markets/funds/a-z'
+url = 'https://www.marketwatch.com/tools/markets/funds/a-z/0-9'
+fetch(url)
+
+asset_class = response.xpath('//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get()
+
+country_name = 
+
+funds = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
+for fund in funds:
+    sec_name = fund.xpath('.//a/text()').get()
+    print (sec_name)
+    exchange = fund.xpath('.//td[2]/text()').get()
+    print (exchange)
+    ticker = fund.xpath('.//a/small/text()').get()
+    print(ticker.strip().strip('(').strip(')'))
+    country = fund.xpath('.//td[3]/text()').get()
+    print (country)
+    industry = fund.xpath('.//td[4]/text()').get()
+    print (industry)
+    sec_link = fund.xpath('.//a/@href').get()
+    print(sec_link)
+
+
+next_page = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].get()
+print (next_page)
+
+//*[@id="marketsindex"]/ul[2]/li[15]/a
+
+sec_url = 'https://www.marketwatch.com/investing/fund/arsaud'
+fetch(sec_url)
+
+beta = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[7]/span[1]/text()').get()
+market_cap = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[4]/span[1]/text()').get()
+pe_ratio = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[9]/span[1]/text()').get()
+short_int = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[14]/span[1]/text()').get()
+price_to_sales = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[9]/span[1]/text()').get()
+
+import time
+%timeit profile_url = response.xpath('//*[@class="list list--subnav horizontal"]/li[4]/a/@href').get()
+%timeit profile_url = response.xpath('//a[@instrument-target="financials"]/@href').get()
+
+profile_url = 'https://www.marketwatch.com/investing/fund/aapl/company-profile?mod=mw_quote_tab'
+fetch(profile_url)
+
+price_to_sales = response.xpath('//table[@aria-label="VALUATION data table"]/tbody/tr[4]/td[2]/text()').get()
+price_to_book = response.xpath('//table[@aria-label="VALUATION data table"]/tbody/tr[5]/td[2]/text()').get()
+price_to_fcf = response.xpath('//table[@aria-label="VALUATION data table"]/tbody/tr[6]/td[2]/text()').get()
+net_margin = response.xpath('//table[@aria-label="PROFITABILITY data table"]/tbody/tr[4]/td[2]/text()').get()
+roc = response.xpath('//table[@aria-label="PROFITABILITY data table"]/tbody/tr[7]/td[2]/text()').get()
+roi = response.xpath('//table[@aria-label="PROFITABILITY data table"]/tbody/tr[8]/td[2]/text()').get()
+debt_to_equity = response.xpath('//table[@aria-label="CAPITALIZATION data table"]/tbody/tr[1]/td[2]/text()').get()
+debt_to_ass = response.xpath('//table[@aria-label="CAPITALIZATION data table"]/tbody/tr[3]/td[2]/text()').get()
+current_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[1]/td[2]/text()').get()
+quick_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[2]/td[2]/text()').get()
+cash_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/tr[3]/td[2]/text()').get()
+
+sec_summary = response.xpath('//p[@class="description__text"]/text()').get()

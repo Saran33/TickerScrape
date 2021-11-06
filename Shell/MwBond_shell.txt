@@ -1,0 +1,39 @@
+
+scrapy shell --nolog
+url = 'https://www.marketwatch.com/tools/markets/bonds/a-z'
+url = 'https://www.marketwatch.com/tools/markets/bonds/a-z/0-9'
+fetch(url)
+
+asset_class = response.xpath('//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get()
+
+country_name = 
+
+bonds = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
+for bond in bonds:
+    sec_name = bond.xpath('.//a/text()').get()
+    print (sec_name)
+    exchange = bond.xpath('.//td[2]/text()').get()
+    print (exchange)
+    ticker = bond.xpath('.//a/small/text()').get()
+    print(ticker.strip().strip('(').strip(')'))
+    country = bond.xpath('.//td[3]/text()').get()
+    print (country)
+    industry = bond.xpath('.//td[4]/text()').get()
+    print (industry)
+    sec_link = bond.xpath('.//a/@href').get()
+    print(sec_link)
+
+
+next_page = response.xpath('//ul[@class="pagination"]/li/a/@href')[-1].get()
+print (next_page)
+
+if response.xpath('//ul[@class="pagination"]/li[@class="active"]/a/text()').get().strip() == 'A':
+    other_pages = response.xpath('//ul[@class="pagination"]/li/a/@href').getall()
+    other_pages.remove('#')
+    print (other_pages)
+
+//*[@id="marketsindex"]/ul[2]/li[15]/a
+
+sec_url = 'https://www.marketwatch.com/investing/bond/arsaud'
+fetch(sec_url)
+
