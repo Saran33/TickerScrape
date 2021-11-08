@@ -31,11 +31,21 @@ class MwETNSpider(scrapy.Spider):
             yield loader.load_item()
 
         # Go to next page
-            for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
-                yield response.follow(next_page, callback=self.parse)
+            pages = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+            if pages:
+                next_page = None
+                try:
+                    next_page = pages[-1]
+                except:
+                    pass
+                if next_page:
+                    yield response.follow(next_page, callback=self.parse)
 
-        if response.xpath('//ul[@class="pagination"]/li[@class="active"]/a/text()').get().strip() == 'A':
-            other_pages = response.xpath('//ul[@class="pagination"]/li/a/@href').getall()
-            other_pages.remove('#')
-            for page in other_pages:
-                yield response.follow(page, callback=self.parse)
+        active_page = response.xpath('//ul[@class="pagination"]/li[@class="active"]/a/text()').get()
+        if active_page:
+            if active_page.strip() == 'A':
+                other_pages = response.xpath('//ul[@class="pagination"]/li/a/@href').getall()
+                if other_pages:
+                    other_pages.remove('#')
+                    for page in other_pages:
+                        yield response.follow(page, callback=self.parse)

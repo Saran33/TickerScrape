@@ -1,5 +1,5 @@
 scrapy shell --nolog
-url = 'https://www.marketwatch.com/tools/markets/currencies/'
+url = 'https://www.marketwatch.com/tools/markets/stocks/'
 fetch(url)
 
 asset_class = response.xpath('//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get()
@@ -33,8 +33,15 @@ if response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li[@class="ac
     next_page = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[:-1].getall()
     print (next_page)
 
+next_page = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+if next_page:
+    print (next_page[-1])
+
+    //*[@id="marketsindex"]/ul[2]/li[22]/a
+
 sec_url = 'https://www.marketwatch.com/investing/stock/aapl'
 sec_url = 'https://www.marketwatch.com/investing/stock/acad'
+sec_url = 'https://www.marketwatch.com/investing/stock/2590?countrycode=jp'
 fetch(sec_url)
 
 beta = response.xpath('//*[@id="maincontent"]/div[6]/div[1]/div[1]/div/ul/li[7]/span[1]/text()').get()
@@ -67,4 +74,8 @@ cash_ratio = response.xpath('//table[@aria-label="LIQUIDITY data table"]/tbody/t
 sec_summary = response.xpath('//p[@class="description__text"]/text()').get()
 
 analyst_url = 'https://www.marketwatch.com/investing/stock/aapl/company-analyst?mod=mw_quote_tab'
+analyst_url = 'https://www.marketwatch.com/investing/stock/absi/analystestimates?mod=mw_quote_tab'
 fetch(analyst_url)
+
+
+high_target = response.xpath('//table[@aria-label="stock price targets data table"]/tbody/tr[1]/td[2]/text()').get()

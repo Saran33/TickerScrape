@@ -107,78 +107,108 @@ class SaveSecuritiesPipeline(object):
         else:
             security.asset_class = asset_class
 
-        country = Country(name=item["country_name"])
-        # Check whether the country already exists in the database
-        exist_country = session.query(
-            Country).filter_by(name=country.name).first()
-        if exist_country is not None:
-            country = exist_country
-        else:
-            countries_df = pd.read_csv('csv_files/country_dataset.csv')
+        if "country_name" in item:
+            country = Country(name=item["country_name"])
+            # Check whether the country already exists in the database
+            exist_country = session.query(
+                Country).filter_by(name=country.name).first()
+            if exist_country is not None:
+                country = exist_country
+            else:
+                countries_df = pd.read_csv('csv_files/country_dataset.csv')
 
-            country_row = pd.Series(dtype='object')
-            country_str = country.name.replace('.', '')
-            if len(country_str) < 5:
-                country_row = countries_df.loc[countries_df['ISO_3166'].astype(
-                    str) == (country_str)]
-            if len(country_row) == 0:
-                country_row = countries_df.loc[countries_df['Country'].str.contains(
-                    country.name)]
-            if len(country_row) > 1:
+                country_row = pd.Series(dtype='object')
+                country_str = country.name.replace('.', '')
+                if len(country_str) < 5:
+                    country_row = countries_df.loc[countries_df['ISO_3166'].astype(
+                        str) == (country_str)]
+                if len(country_row) == 0:
+                    country_row = countries_df.loc[countries_df['Country'].str.contains(
+                        country.name)]
+                if len(country_row) > 1:
+                    highest = process.extractOne(
+                        country.name, country_row['Country'])
+                    country_row = country_row.loc[country_row['Country'].str.contains(
+                        highest[0])]
+                if len(country_row) == 0:
+                    # highest = process.extractOne(country,countries_df['Country']) # scorer=fuzz.token_set_ratio
+                    highest = process.extractOne(
+                        country.name, countries_df['Country'], scorer=fuzz.token_set_ratio)
+                    print("WARNING : Using fuzzy logic to predict country:",
+                        highest[0])
+                    country_row = countries_df.loc[countries_df['Country'].str.contains(
+                        highest[0])]
+
+                country.ISO_3166 = country_row['ISO_3166'].values[0]
+                country.continent = country_row['Continent'].values[0]
+                country.territory = country_row['Territory'].values[0]
+                country.territory_of = country_row['Territory_of'].values[0]
+                country.region = country_row['Region'].values[0]
+                country.econ_group = country_row['Econ_Group'].values[0]
+                country.geopol_group = country_row['Geopol_group'].values[0]
+                # country.geopol_group = country.geopol_group + country_row['Geopol_group'].values[0]
+
+            country.securities.append(security)
+
+            # Add currency for new countrie
+            if exist_country is None:
+                fx_codes = pd.read_csv('csv_files/ISO_4217_FX_Codes.csv')
+                entity = pd.Series(dtype='object')
+                # entity = fx_codes.loc[fx_codes['Entity'].str.contains(
+                #     country.name, regex=False)]
                 highest = process.extractOne(
-                    country.name, country_row['Country'])
-                country_row = country_row.loc[country_row['Country'].str.contains(
-                    highest[0])]
-            if len(country_row) == 0:
-                # highest = process.extractOne(country,countries_df['Country']) # scorer=fuzz.token_set_ratio
-                highest = process.extractOne(
-                    country.name, countries_df['Country'], scorer=fuzz.token_set_ratio)
-                print("WARNING : Using fuzzy logic to predict country:",
-                      highest[0])
-                country_row = countries_df.loc[countries_df['Country'].str.contains(
-                    highest[0])]
+                    country.name, fx_codes['Entity'], scorer=fuzz.token_set_ratio)
+                print(highest[0])
+                entity = fx_codes.loc[fx_codes['Entity'].astype(str) == highest[0]]
+                if not entity.empty:
+                    for index, row in entity.iterrows():
+                        match_currency = entity['Currency'][index]
+                        exist_currency = session.query(Currency).filter_by(
+                            name=match_currency).first()
+                        if exist_currency is None:
+                            currency = Currency(name=match_currency)
+                            match_ticker = entity['Ticker'][index]
+                            if match_ticker:
+                                currency.ticker = match_ticker
+                            if "fx_symbol" in item:
+                                currency.fx_symbol = item["fx_symbol"]
+                            else:
+                                currency.fx_symbol = entity['Symbol'][index]
+                            ISO_4217 = entity['ISO_4217'][index]
+                            if ISO_4217:
+                                print("ISO_4217", ISO_4217)
+                                currency.ISO_4217 = ISO_4217
+                            minor_unit = entity['Minor_unit'][index]
+                            if minor_unit:
+                                currency.minor_unit = minor_unit
+                            fund = entity['Fund'][index]
+                            if fund == True:
+                                currency.fund = fund
+                            description = entity['Description'][index]
+                            if description:
+                                currency.description = description
+                        else:
+                            currency = exist_currency
+                        if currency:
+                            country.currencies.append(currency)
 
-            country.ISO_3166 = country_row['ISO_3166'].values[0]
-            country.continent = country_row['Continent'].values[0]
-            country.territory = country_row['Territory'].values[0]
-            country.territory_of = country_row['Territory_of'].values[0]
-            country.region = country_row['Region'].values[0]
-            country.econ_group = country_row['Econ_Group'].values[0]
-            country.geopol_group = country_row['Geopol_group'].values[0]
-            # country.geopol_group = country.geopol_group + country_row['Geopol_group'].values[0]
-
-            security.countries.append(country)
-
-        # Add currency for new countrie
-
-        if exist_country is None:
-            fx_codes = pd.read_csv('csv_files/ISO_4217_FX_Codes.csv')
-            entity = fx_codes.loc[fx_codes['Entity'].str.contains(
-                country.name, regex=False)]
-            if not entity.empty:
-                for index, row in entity.iterrows():
-                    match_currency = entity['Currency'][index]
-                    exist_currency = session.query(Currency).filter_by(
-                        name=match_currency).first()
-                    if exist_currency is None:
-                        currency = Currency(name=match_currency)
-                        match_ticker = entity['Ticker'][index]
-                        if match_ticker:
-                            currency.ticker = match_ticker
-                        ISO_4217 = entity['ISO_4217'][index]
-                        if ISO_4217:
-                            currency.ISO_4217 = ISO_4217
-                        minor_unit = entity['Minor_unit'][index]
-                        if minor_unit:
-                            currency.minor_unit = minor_unit
-                        fund = entity['Fund'][index]
-                        description = entity['Description'][index]
-                        if description:
-                            currency.description = description
-                    else:
-                        currency = exist_currency
-                    if currency:
-                        country.currencies.append(currency)
+            # elif (exist_country != None) and ("fx_symbol" in item):
+            #     fx_codes = pd.read_csv('csv_files/ISO_4217_FX_Codes.csv')
+            #     entity = pd.Series(dtype='object')
+            #     # entity = fx_codes.loc[fx_codes['Entity'].str.contains(
+            #     #     country.name, regex=False)]
+            #     highest = process.extractOne(
+            #         country.name, fx_codes['Entity'], scorer=fuzz.token_set_ratio)
+            #     print(highest[0])
+            #     entity = fx_codes.loc[fx_codes['Entity'].astype(str) == highest[0]]
+            #     if not entity.empty:
+            #         for index, row in entity.iterrows():
+            #             match_currency = entity['Currency'][index]
+            #             exist_currency = session.query(Currency).filter_by(name=match_currency).first()
+            #             currency = Currency(name=match_currency)
+            #             if currency.fx_symbol == None:
+            #                 print ('FX_SYMBOL UPDATE:', currency, currency.fx_symbol)
+            #                 currency.fx_symbol = item["fx_symbol"]
 
         if "industry" in item:
             industry = Industry(name=item['industry'])

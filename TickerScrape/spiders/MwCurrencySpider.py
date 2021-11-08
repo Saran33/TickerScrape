@@ -17,7 +17,7 @@ class MwCurrencySpider(scrapy.Spider):
     def parse(self, response):
         self.logger.info('Parse function called on {}'.format(response.url))
         asset_class = response.xpath(
-            '//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get()
+            '//*[@id="marketsindex"]/ul[@class="nav nav-pills"]/li[@class="active"]/a/text()').get() 
         currencies = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
         for currency in currencies:
             loader = ItemLoader(item=MwCurrencyItem(), selector=currency)
@@ -25,10 +25,18 @@ class MwCurrencySpider(scrapy.Spider):
             loader.add_xpath('sec_name', './/a/text()')
             loader.add_xpath('ticker', './/a/small/text()')
             loader.add_xpath('exchange', './/td[2]/text()')
-            loader.add_xpath('industry', './/td[3]/text()')
+            # loader.add_xpath('country_name', './/td[3]/text()')
+            loader.add_xpath('industry', './/td[4]/text()')
             # sec_link = currency.xpath('.//a/@href').get()
             yield loader.load_item()
 
         # Go to next page
-            for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
-                yield response.follow(next_page, callback=self.parse)
+            pages = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+            if pages:
+                next_page = None
+                try:
+                    next_page = pages[-1]
+                except:
+                    pass
+                if next_page:
+                    yield response.follow(next_page, callback=self.parse)

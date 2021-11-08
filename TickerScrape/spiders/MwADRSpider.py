@@ -3,7 +3,7 @@ from scrapy.loader import ItemLoader
 from TickerScrape.items import MwMWADRItem
 
 
-class MWADRSpider(scrapy.Spider):
+class MwADRSpider(scrapy.Spider):
     '''
     Spider for MarketWatch adr American Depository Receipt Stocks data.
     name :  'mw_adrs'
@@ -31,8 +31,13 @@ class MWADRSpider(scrapy.Spider):
             yield loader.load_item()
 
         # Go to next page
-            for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
-                yield response.follow(next_page, callback=self.parse)
+            pages = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+            if pages:
+                try:    
+                    next_page = pages[-1]
+                    yield response.follow(next_page, callback=self.parse)
+                except:
+                    pass
 
         if response.xpath('//ul[@class="pagination"]/li[@class="active"]/a/text()').get().strip() == 'A':
             other_pages = response.xpath('//ul[@class="pagination"]/li/a/@href').getall()

@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from TickerScrape.items import MwCryptoItem
+from TickerScrape.ticker_tools import extract_bond_country
 
 
 class MwCryptoSpider(scrapy.Spider):
@@ -12,7 +13,8 @@ class MwCryptoSpider(scrapy.Spider):
 
     # allowed_domains = ['marketwatch.com']
     # domain_name ='https://www.marketwatch.com'
-    start_urls = ["https://www.marketwatch.com/tools/markets/crypto-currencies"]
+    start_urls = [
+        "https://www.marketwatch.com/tools/markets/crypto-currencies"]
 
     def parse(self, response):
         self.logger.info('Parse function called on {}'.format(response.url))
@@ -25,11 +27,22 @@ class MwCryptoSpider(scrapy.Spider):
             loader.add_xpath('sec_name', './/a/text()')
             loader.add_xpath('ticker', './/a/small/text()')
             loader.add_xpath('exchange', './/td[2]/text()')
-            loader.add_xpath('country_name', './/td[3]/text()')
+            country_name = response.xpath('.//td[3]/text()').get()
+            country_name = extract_bond_country(country_name)
+            if country_name:
+                loader.add_value('country_name', country_name)
             loader.add_xpath('industry', './/td[4]/text()')
             # sec_link = crypto.xpath('.//a/@href').get()
             yield loader.load_item()
 
         # Go to next page
-            for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
-                yield response.follow(next_page, callback=self.parse)
+            pages = response.xpath(
+                '//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+            if pages:
+                next_page = None
+                try:
+                    next_page = pages[-1]
+                except:
+                    pass
+                if next_page:
+                    yield response.follow(next_page, callback=self.parse)

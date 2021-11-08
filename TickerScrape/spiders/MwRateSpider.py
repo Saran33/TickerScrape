@@ -3,7 +3,7 @@ from scrapy.loader import ItemLoader
 from TickerScrape.items import MwRateItem
 
 
-class MWRateSpider(scrapy.Spider):
+class MwRateSpider(scrapy.Spider):
     '''
     Spider for MarketWatch rate ticker data.
     name :  'mw_rates'
@@ -29,5 +29,13 @@ class MWRateSpider(scrapy.Spider):
             yield loader.load_item()
 
         # Go to next page
-            for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
-                yield response.follow(next_page, callback=self.parse)
+            pages = response.xpath(
+                '//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+            if pages:
+                next_page = None
+                try:
+                    next_page = pages[-1]
+                except:
+                    pass
+                if next_page:
+                    yield response.follow(next_page, callback=self.parse)

@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from TickerScrape.items import MwBenchItem
+from TickerScrape.ticker_tools import extract_bond_country
 
 
 class MwBenchmarkSpider(scrapy.Spider):
@@ -22,13 +23,27 @@ class MwBenchmarkSpider(scrapy.Spider):
         for currency in currencies:
             loader = ItemLoader(item=MwBenchItem(), selector=currency)
             loader.add_value('asset_class', asset_class)
-            loader.add_xpath('sec_name', './/a/text()')
+            sec_name = currency.xpath('.//a/text()').get()
+            if sec_name:
+                loader.add_value('sec_name', sec_name)
             loader.add_xpath('ticker', './/a/small/text()')
             loader.add_xpath('exchange', './/td[2]/text()')
             loader.add_xpath('industry', './/td[3]/text()')
             # sec_link = currency.xpath('.//a/@href').get()
+            country_name = extract_bond_country(sec_name)
+            if country_name:
+                loader.add_value('country_name', country_name)
+            loader.add_value('country_name', 'country_name')
             yield loader.load_item()
 
         # Go to next page
-            for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
-                yield response.follow(next_page, callback=self.parse)
+            pages = response.xpath(
+                '//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+            if pages:
+                next_page = None
+                try:
+                    next_page = pages[-1]
+                except:
+                    pass
+                if next_page:
+                    yield response.follow(next_page, callback=self.parse)

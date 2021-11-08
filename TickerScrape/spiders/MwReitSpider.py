@@ -13,7 +13,7 @@ class MwReitSpider(scrapy.Spider):
     # allowed_domains = ['marketwatch.com']
     # domain_name ='https://www.marketwatch.com'
     start_urls = ["https://www.marketwatch.com/tools/markets/real-estate-investment-trusts/a-z",
-                "https://www.marketwatch.com/tools/markets/real-estate-investment-trusts/a-z/0-9"]
+                  "https://www.marketwatch.com/tools/markets/real-estate-investment-trusts/a-z/0-9"]
 
     def parse(self, response):
         self.logger.info('Parse function called on {}'.format(response.url))
@@ -34,8 +34,13 @@ class MwReitSpider(scrapy.Spider):
             for next_page in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[-1].getall():
                 yield response.follow(next_page, callback=self.parse)
 
-        if response.xpath('//ul[@class="pagination"]/li[@class="active"]/a/text()').get().strip() == 'A':
-            other_pages = response.xpath('//ul[@class="pagination"]/li/a/@href').getall()
-            other_pages.remove('#')
-            for page in other_pages:
-                yield response.follow(page, callback=self.parse)
+        active_page = response.xpath(
+            '//ul[@class="pagination"]/li[@class="active"]/a/text()').get()
+        if active_page:
+            if active_page.strip() == 'A':
+                other_pages = response.xpath(
+                    '//ul[@class="pagination"]/li/a/@href').getall()
+                if other_pages:
+                    other_pages.remove('#')
+                    for page in other_pages:
+                        yield response.follow(page, callback=self.parse)

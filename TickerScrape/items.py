@@ -34,6 +34,7 @@ def to_float(float_str):
             fl = float("NaN")
     return fl
 
+
 def to_int(int_str):
     if int_str.strip() == 'N/A':
         integ = None
@@ -51,14 +52,15 @@ def curr_str_to_float(cur_str, symbol='$'):
     num_strs = ['thousand', 'million', 'billion', 'trillion']
     str_num_1 = None
     try:
+        if not cur_str[0].isdigit():
+            symbol = cur_str[0]
         for x in num_strs:
             if x in cur_str.lower():
-                str_num_1 = cur_str.lower().strip().replace(
-                    x, '').replace(',', '').replace(symbol, '')
+                str_num_1 = cur_str.lower().replace(x, '').replace(',', '').replace(symbol, '')
                 # str_num_1 = [cur_str.replace(x, '') for x in num_strs if x in cur_str.lower()]
         if not str_num_1:
-            str_num_1 = cur_str.strip().replace('M', '').replace(
-                'B', '').replace('T', '').replace(',', '').replace(symbol, '')
+            str_num_1 = cur_str.replace('M', '').replace('B', '').replace(
+                'T', '').replace(',', '').replace(symbol, '')
         if 'm' in cur_str.lower():
             fl_num = float(str_num_1) * 1000000
         elif 'b' in cur_str.lower():
@@ -67,14 +69,45 @@ def curr_str_to_float(cur_str, symbol='$'):
             fl_num = float(str_num_1) * 1000
         elif ('T' in cur_str) or ('trillion' in cur_str.lower()):
             fl_num = float(str_num_1) * 1000000000000
+        elif [i.isdigit() for i in str_num_1]:
+            fl_num = float(str_num_1)
         else:
-            try:
-                fl_num = float(str_num_1)
-            except:
-                fl_num = float("NaN")
+            fl_num = float("NaN")
         # print ("${0:,.2f}".format(fl_num))
     except:
         fl_num = float("NaN")
+    return fl_num
+
+
+def curr_str_to_int(cur_str, symbol='$'):
+    '''Convert a currency string-formatted number into a float.'''
+
+    num_strs = ['thousand', 'million', 'billion', 'trillion']
+    str_num_1 = None
+    try:
+        if not cur_str[0].isdigit():
+            symbol = cur_str[0]
+        for x in num_strs:
+            if x in cur_str.lower():
+                str_num_1 = cur_str.lower().replace(x, '').replace(',', '').replace(symbol, '')
+                # str_num_1 = [cur_str.replace(x, '') for x in num_strs if x in cur_str.lower()]
+        if not str_num_1:
+            str_num_1 = cur_str.replace('M', '').replace('B', '').replace(
+                'T', '').replace(',', '').replace(symbol, '')
+        if 'm' in cur_str.lower():
+            fl_num = float(str_num_1) * 1000000
+        elif 'b' in cur_str.lower():
+            fl_num = float(str_num_1) * 1000000000
+        elif 'thousand' in cur_str.lower():
+            fl_num = float(str_num_1) * 1000
+        elif ('T' in cur_str) or ('trillion' in cur_str.lower()):
+            fl_num = float(str_num_1) * 1000000000000
+        elif [i.isdigit() for i in str_num_1]:
+            fl_num = float(str_num_1)
+        else:
+            fl_num = None
+    except:
+        fl_num = None
     return fl_num
 
 
@@ -110,6 +143,12 @@ def strp_brackets(text):
     Strip brackets surrounding a string.
     """
     return text.strip().strip('(').strip(')')
+
+
+def normalize_text(text):
+    """strip the unicode"""
+    text = normalize("NFKD", ''.join(map(str, text)))
+    return text
 
 
 def strp_dt(text):
@@ -313,6 +352,10 @@ class MwStockItem(Item):
     country_name = Field(
         output_processor=TakeFirst()
     )
+    fx_symbol = Field(
+        input_processor=MapCompose(str.strip, normalize_text),
+        output_processor=TakeFirst()
+    )
     industry = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -429,8 +472,13 @@ class MwCurrencyItem(Item):
     )
     tags = Field()
 
+
 class MwMWADRItem(Item):
     sec_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
+    country_name = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
     )
@@ -457,6 +505,10 @@ class MwBenchItem(Item):
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     ticker = Field(
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
@@ -473,12 +525,17 @@ class MwBenchItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwBondItem(Item):
     sec_name = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     ticker = Field(
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
@@ -496,8 +553,13 @@ class MwBondItem(Item):
     )
     tags = Field()
 
+
 class MwCryptoItem(Item):
     sec_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
+    country_name = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
     )
@@ -517,6 +579,7 @@ class MwCryptoItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwETFItem(Item):
     sec_name = Field(
@@ -527,6 +590,10 @@ class MwETFItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -539,6 +606,7 @@ class MwETFItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwETNItem(Item):
     sec_name = Field(
@@ -549,6 +617,10 @@ class MwETNItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -561,6 +633,7 @@ class MwETNItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwFundItem(Item):
     sec_name = Field(
@@ -571,6 +644,10 @@ class MwFundItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -583,6 +660,7 @@ class MwFundItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwFuturesItem(Item):
     sec_name = Field(
@@ -593,6 +671,10 @@ class MwFuturesItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -605,6 +687,7 @@ class MwFuturesItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwIndexItem(Item):
     sec_name = Field(
@@ -615,6 +698,10 @@ class MwIndexItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -627,6 +714,7 @@ class MwIndexItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwRateItem(Item):
     sec_name = Field(
@@ -637,6 +725,10 @@ class MwRateItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -649,6 +741,7 @@ class MwRateItem(Item):
         output_processor=TakeFirst()
     )
     tags = Field()
+
 
 class MwReitItem(Item):
     sec_name = Field(
@@ -659,6 +752,10 @@ class MwReitItem(Item):
         input_processor=MapCompose(strp_brackets),
         output_processor=TakeFirst()
     )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
+        output_processor=TakeFirst()
+    )
     exchange = Field(
         input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
@@ -672,6 +769,7 @@ class MwReitItem(Item):
     )
     tags = Field()
 
+
 class MwWarrantItem(Item):
     sec_name = Field(
         input_processor=MapCompose(str.strip),
@@ -679,6 +777,10 @@ class MwWarrantItem(Item):
     )
     ticker = Field(
         input_processor=MapCompose(strp_brackets),
+        output_processor=TakeFirst()
+    )
+    country_name = Field(
+        input_processor=MapCompose(str.strip),
         output_processor=TakeFirst()
     )
     exchange = Field(

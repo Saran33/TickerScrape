@@ -104,7 +104,7 @@ class Security(Base):
     # Many securities to one asset class
     asset_class_id = Column(Integer, ForeignKey('asset_class.id'))
     countries = relationship('Country', secondary='countries_association',
-                           lazy='dynamic', backref="security", overlaps="security,countries")  # M-to-M for securities and countries
+                           lazy='dynamic', backref="security", overlaps="country,securities")  # M-to-M for securities and countries
     industries = relationship('Industry', secondary='industries_association',
                           lazy='dynamic', backref="security", overlaps="security,industries")  # M-to-M for security and industry
     exchanges = relationship('Exchange', secondary='exchanges_association',
@@ -135,8 +135,8 @@ class Country(Base):
     __tablename__ = "country"
 
     id = Column(Integer, primary_key=True)
-    name = Column('name', String(32), unique=True)  # , nullable=False)
-    ISO_3166 = Column('ISO_3166', String(8), unique=True)  # , nullable=False)
+    name = Column('name', String(32))  # , nullable=False)
+    ISO_3166 = Column('ISO_3166', String(8))  # , nullable=False)
     continent = Column('continent', String(16), default=None)
     region = Column('region', String(8), default=None)
     econ_group = Column('econ_group', String(32), default=None)
@@ -155,7 +155,7 @@ class Country(Base):
     currencies = relationship('Currency', secondary='currencies_association',
                             lazy='dynamic', backref="country", overlaps="currency,countries")
     securities = relationship('Security', secondary='countries_association',
-                            lazy='dynamic', backref="country", overlaps="security,countries")
+                            lazy='dynamic', backref="country", overlaps="country,securities")
     # def __repr__(self):
     #     return "<{0} Id: {1} - Name: {2}, Continent: {3}, Region: {4}, Geopol. Group: {5}>".format(self.__class__name, self.id,
     #             self.name, self.continent, self.region, self.geo_region)
@@ -167,6 +167,8 @@ class Currency(Base):
     id = Column(Integer, primary_key=True)
     name = Column('name', String(160), unique=True)
     ticker = Column('ticker', String(32), unique=True, default=None)
+    fx_symbol = Column('fx_symbol', String(16), default=None)
+    ISO_4217 = Column('ISO_4217', Integer, default=None)
     minor_unit = Column('minor_unit', Integer, default=None)
     fund = Column('fund', Boolean, default=False)
     description = Column('description', Text(), default=None)
