@@ -5,8 +5,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 	
 setup(
     name='TickerScrape',
-    packages=find_packages(include=['tutorial']),
-    version='0.1618',
+    packages=find_packages(include=['TickerScrape']),
+    version='0.16180',
 	author='Saran Connolly',
     description='Scrape the universe of exchange-traded security tickers.',
 	long_description=long_description,
@@ -28,7 +28,7 @@ setup(
         'fuzzywuzzy', 'python-Levenshtein'
 ],
 	#package_dir={"": "src"},
-    #packages=find_packages(where="FiScrape"),
+    #packages=find_packages(where="TickerScrape"),
     python_requires=">=3.8",
     setup_requires=['pytest-runner'],
     tests_require=['pytest==4.4.1'],
