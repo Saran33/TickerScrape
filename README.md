@@ -2,7 +2,12 @@
 ### Scrape the universe of exchange-traded security tickers. 
 `TickerScrape` is a package for scraping financial security ticker data. It leverages `scrapy`.
 
-Tickers can be stored locally as CSV or in a database using SQLAlchemy. The scraper can be set to run periodically.
+Every publically traded security for every asset class are scraped to a SQL database using SQLAlchemy.
+The ORM is configured to create database tables mapping securities to assset classes, countries, industries and exchanges.
+It also creates relationships between counties and currencies, as well as industruies and sectors (based on NAICS codes).
+The securities table has columns for fundamental data, metadata, accounting ratios, and analyst estimates.
+Country metadata such as ISO 3166 code, continent, territory status, region, economic grouping, and geopolitical grouping are pulled from a local CSV file. The country table also has empty columns for economic data such as GDP.
+Currency metadata such as symbol, ISO 4217 code, ticker, and minor unit are pulled from a local CSV file. The currency table also has empty columns for economic data such as interest rates.
 
 The repository can be found at:
 [Github-TickerScrape](https://github.com/Saran33/TickerScrape/)
@@ -70,11 +75,15 @@ http://localhost:8050/
 To see the stats of the cluster:
 http://localhost:8036/
 
-### To run TickerScrape:
+### To run TickerScrape (download every security for every country):
 1. Navigate to the outer directory of TickerScrape.
 2. Open a terminal and run:
 ```zsh
 python3 TickerScrape.py 
+```
+### To scrape U.S.stocks only:
+```zsh
+scrapy crawl mw_stocks -a country=us
 ```
 #### To run TickerScrape GUI:
 ```zsh

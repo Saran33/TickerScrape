@@ -5,15 +5,12 @@ import requests as rq
 from bs4 import BeautifulSoup
 from lxml import etree
 from TickerScrape.items import to_float, curr_str_to_float, perc_str_to_float, to_int
-# import sys
+
 
 class MwStockSpider(scrapy.Spider):
     '''
     Spider for MarketWatch stock ticker data.
     name :  'mw_stocks'
-    usage:  scrapy crawl mw_stocks
-    Only U.S. stocks:
-            scrapy crawl mw_stocks -a country=us
     '''
     name = "mw_stocks"
 
@@ -23,7 +20,7 @@ class MwStockSpider(scrapy.Spider):
 
     def __init__(self, country='', **kwargs):
         self.country = country
-        super().__init__(**kwargs)  # python3
+        super().__init__(**kwargs)
 
     def parse(self, response):
         self.logger.info('Parse function called on {}'.format(response.url))
@@ -41,47 +38,64 @@ class MwStockSpider(scrapy.Spider):
         country_name = response.xpath(
             '//*[@id="marketsindex"]/h2/text()').get()
         country_name = country_name.replace('Location: ', '')
-        # print ('ARGV:', len(sys.argv))
-        # if 'us' in sys.argv:
+        
         if self.country == 'us':
             if country_name == 'United States':
-                print ('CRAWLING COUNTRY:', country_name)
-                self.load_country(response, asset_class, country_name)
+                stocks = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
+                for stock in stocks:
+                    loader = ItemLoader(item=MwStockItem(), selector=stock)
+                    loader.add_value('asset_class', asset_class)
+                    loader.add_value('country_name', country_name)
+                    loader.add_xpath('sec_name', './/a/text()')
+                    loader.add_xpath('ticker', './/a/small/text()')
+                    loader.add_xpath('exchange', './/td[2]/text()')
+                    loader.add_xpath('industry', './/td[3]/text()')
+                    sec_link = stock.xpath('.//a/@href').get()
+                    security_item = loader.load_item()
+                    request = response.follow(sec_link, self.parse_security, meta={
+                                            'security_item': security_item})
+                    request.meta['security_item'] = security_item
+                    if request:
+                        yield request
+                    else:
+                        yield security_item
+
+                pages = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+                if pages:
+                    try:    
+                        next_page = pages[-1]
+                        yield response.follow(next_page, callback=self.parse_country)
+                    except:
+                        pass
+        
         else:
             if country_name:
-                self.load_country(response, asset_class, country_name)
+                stocks = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
+                for stock in stocks:
+                    loader = ItemLoader(item=MwStockItem(), selector=stock)
+                    loader.add_value('asset_class', asset_class)
+                    loader.add_value('country_name', country_name)
+                    loader.add_xpath('sec_name', './/a/text()')
+                    loader.add_xpath('ticker', './/a/small/text()')
+                    loader.add_xpath('exchange', './/td[2]/text()')
+                    loader.add_xpath('industry', './/td[3]/text()')
+                    sec_link = stock.xpath('.//a/@href').get()
+                    security_item = loader.load_item()
+                    request = response.follow(sec_link, self.parse_security, meta={
+                                            'security_item': security_item})
+                    request.meta['security_item'] = security_item
+                    if request:
+                        yield request
+                    else:
+                        yield security_item
 
-            # # Go to next page
-            # if response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li[@class="active"]/span/text()').get() == '1':
-            #     for a in response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href')[:-1].getall():
-            #         yield response.follow(a, callback=self.parse_country)
-            pages = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
-            if pages:
-                try:    
-                    next_page = pages[-1]
-                    yield response.follow(next_page, callback=self.parse_country)
-                except:
-                    pass
-
-    def load_country(self, response, asset_class, country_name):
-        stocks = response.xpath('//*[@id="marketsindex"]/table/tbody/tr')
-        for stock in stocks:
-            loader = ItemLoader(item=MwStockItem(), selector=stock)
-            loader.add_value('asset_class', asset_class)
-            loader.add_value('country_name', country_name)
-            loader.add_xpath('sec_name', './/a/text()')
-            loader.add_xpath('ticker', './/a/small/text()')
-            loader.add_xpath('exchange', './/td[2]/text()')
-            loader.add_xpath('industry', './/td[3]/text()')
-            sec_link = stock.xpath('.//a/@href').get()
-            security_item = loader.load_item()
-            request = response.follow(sec_link, self.parse_security, meta={
-                                    'security_item': security_item})
-            request.meta['security_item'] = security_item
-            if request:
-                yield request
-            else:
-                yield security_item
+                pages = response.xpath('//*[@id="marketsindex"]/ul[@class="pagination"]/li/a/@href').getall()
+                if pages:
+                    try:    
+                        next_page = pages[-1]
+                        yield response.follow(next_page, callback=self.parse_country)
+                    except:
+                        pass
 
     def parse_security(self, response):
         security_item = response.meta['security_item']
